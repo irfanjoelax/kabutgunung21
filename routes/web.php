@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/**
+ * GROUP ROUTE ADMINISTRATOR
+ */
+Route::middleware(['auth'])->group(function () {
+    // DASHBOARD ADMIN
+    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
+
+    // UPDATE PROFILE
+    Route::get('/admin/profile', [App\Http\Controllers\ProfileController::class, 'index']);
+    Route::post('/admin/profile', [App\Http\Controllers\ProfileController::class, 'update']);
+
+    // MASTER DATA KATEGORI
+    Route::get('/admin/kategori', [App\Http\Controllers\KategoriController::class, 'index']);
+    Route::get('/admin/kategori/create', [App\Http\Controllers\KategoriController::class, 'create']);
+    Route::get('/admin/kategori/edit/{id}', [App\Http\Controllers\KategoriController::class, 'edit']);
+    Route::post('/admin/kategori/submit/{id?}', [App\Http\Controllers\KategoriController::class, 'submit']);
+    Route::get('/admin/kategori/delete/{id}', [App\Http\Controllers\KategoriController::class, 'delete']);
+
+    // MASTER DATA MARKETPLACE
+    Route::get('/admin/marketplace', [App\Http\Controllers\MarketplaceController::class, 'index']);
+    Route::get('/admin/marketplace/create', [App\Http\Controllers\MarketplaceController::class, 'create']);
+    Route::get('/admin/marketplace/edit/{id}', [App\Http\Controllers\MarketplaceController::class, 'edit']);
+    Route::post('/admin/marketplace/submit/{id?}', [App\Http\Controllers\MarketplaceController::class, 'submit']);
+    Route::get('/admin/marketplace/delete/{id}', [App\Http\Controllers\MarketplaceController::class, 'delete']);
+
+    // MASTER DATA PENGELUARAN
+    Route::get('/admin/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index']);
+    Route::get('/admin/pengeluaran/create', [App\Http\Controllers\PengeluaranController::class, 'create']);
+    Route::get('/admin/pengeluaran/edit/{id}', [App\Http\Controllers\PengeluaranController::class, 'edit']);
+    Route::post('/admin/pengeluaran/submit/{id?}', [App\Http\Controllers\PengeluaranController::class, 'submit']);
+    Route::get('/admin/pengeluaran/delete/{id}', [App\Http\Controllers\PengeluaranController::class, 'delete']);
+});
