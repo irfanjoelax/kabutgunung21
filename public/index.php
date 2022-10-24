@@ -31,8 +31,8 @@ if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php'
 |
 */
 
-// require __DIR__ . '/../vendor/autoload.php'; // development
-require __DIR__ . '/../kabutgunung21/vendor/autoload.php'; // production
+require __DIR__ . '/../vendor/autoload.php'; // development
+// require __DIR__ . '/../kabutgunung21/vendor/autoload.php'; // production
 
 /*
 |--------------------------------------------------------------------------
@@ -45,13 +45,13 @@ require __DIR__ . '/../kabutgunung21/vendor/autoload.php'; // production
 |
 */
 
-// $app = require_once __DIR__ . '/../bootstrap/app.php'; // development
-$app = require_once __DIR__ . '/../kabutgunung21/bootstrap/app.php'; // production
+$app = require_once __DIR__ . '/../bootstrap/app.php'; // development
+// $app = require_once __DIR__ . '/../kabutgunung21/bootstrap/app.php'; // production
 
 // set the public path to this directory for production
-$app->bind('path.public', function () {
-    return __DIR__;
-});
+// $app->bind('path.public', function () {
+//     return __DIR__;
+// });
 
 $kernel = $app->make(Kernel::class);
 
