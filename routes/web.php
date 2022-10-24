@@ -36,6 +36,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/marketplace/submit/{id?}', [App\Http\Controllers\MarketplaceController::class, 'submit']);
     Route::get('/admin/marketplace/delete/{id}', [App\Http\Controllers\MarketplaceController::class, 'delete']);
 
+    // MASTER DATA PRODUK
+    Route::get('/admin/produk', [App\Http\Controllers\ProdukController::class, 'index']);
+    Route::get('/admin/produk/create', [App\Http\Controllers\ProdukController::class, 'create']);
+    Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
+    Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
+    Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
+
     // MASTER DATA PENGELUARAN
     Route::get('/admin/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index']);
     Route::get('/admin/pengeluaran/create', [App\Http\Controllers\PengeluaranController::class, 'create']);

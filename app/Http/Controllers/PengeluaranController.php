@@ -20,7 +20,7 @@ class PengeluaranController extends Controller
                 $row = [];
 
                 $row[] = '<p class="text-center">' . $no++ . '</p>';
-                $row[] = '<p class="text-center">' . $pengeluaran->date . '</p>';
+                $row[] = '<p class="text-center">' . tanggal($pengeluaran->date) . '</p>';
                 $row[] = '<p class="text-start">' . $pengeluaran->detail . '</p>';
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($pengeluaran->nominal) . '</span>

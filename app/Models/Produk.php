@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Produk extends Model
 {
     use HasFactory;
 
@@ -30,8 +30,8 @@ class Kategori extends Model
      */
     public $incrementing = false;
 
-    public function produks()
+    public function kategori()
     {
-        return $this->hasMany('App\Models\Produk');
+        return $this->belongsTo('App\Models\Kategori');
     }
 }
