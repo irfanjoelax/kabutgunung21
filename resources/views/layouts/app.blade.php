@@ -76,6 +76,13 @@
                         </a>
                     </li>
                     <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'penjualan' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/penjualan') }}">
+                            <i class="fa-solid fa-cart-arrow-down"></i>
+                            <span class="ms-1">Penjualan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
                             href="{{ url('admin/pengeluaran') }}">
                             <i class="fa-solid fa-credit-card"></i>

@@ -49,4 +49,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/pengeluaran/edit/{id}', [App\Http\Controllers\PengeluaranController::class, 'edit']);
     Route::post('/admin/pengeluaran/submit/{id?}', [App\Http\Controllers\PengeluaranController::class, 'submit']);
     Route::get('/admin/pengeluaran/delete/{id}', [App\Http\Controllers\PengeluaranController::class, 'delete']);
+
+    // MASTER DATA PENJUALAN
+    Route::get('/admin/penjualan', [App\Http\Controllers\PenjualanController::class, 'index']);
+    Route::get('/admin/penjualan/create', [App\Http\Controllers\PenjualanController::class, 'create']);
+    Route::get('/admin/penjualan/show/{id}', [App\Http\Controllers\PenjualanController::class, 'show']);
+    Route::get('/admin/penjualan/detail/{id}', [App\Http\Controllers\PenjualanController::class, 'detail']);
+    Route::get('/admin/penjualan/edit/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'editKurir']);
+    Route::post('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
+    Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
 });
