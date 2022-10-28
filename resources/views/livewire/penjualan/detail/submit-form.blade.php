@@ -60,14 +60,14 @@
                         </div>
                         <div class="col-md-6 mb-2">
                             <button type="button"
-                                onclick="return confirm(`Apakah yakin ingin membatalkan penjualan ini?`) || event.stopImmediatePropagation()"
+                                onclick="return confirm(`Apakah yakin ingin membatalkan dan menghapus penjualan ini?`) || event.stopImmediatePropagation()"
                                 wire:click="cancel" class="btn btn-warning w-100">
                                 <div wire:loading wire:target="cancel">
                                     <span class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span>
                                 </div>
                                 <div wire:loading.remove wire:target="cancel">
-                                    <i class="fa fa-times"></i> Batal
+                                    <i class="fa fa-times"></i> Batalkan
                                 </div>
                             </button>
                         </div>

@@ -28,8 +28,4 @@
 
 @section('script')
     @livewireScripts
-
-    <script>
-        const cancelConfirm = new bootstrap.Modal('#cancelConfirm', options)
-    </script>
 @endsection

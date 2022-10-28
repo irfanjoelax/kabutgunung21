@@ -9,8 +9,12 @@
                         <i class="fa-solid fa-chevron-left"></i>
                         <span class="ms-1">Kembali</span>
                     </a>
+                    <button onclick="printArea()" class="btn btn-primary ms-2">
+                        <i class="fa-solid fa-print"></i>
+                        <span class="ms-1">Cetak</span>
+                    </button>
                 </div>
-                <div class="card border-0 shadow p-3">
+                <div class="card border-0 shadow p-3" id="print-area">
                     {{-- HEADER --}}
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="text-start">
@@ -91,14 +95,14 @@
 
                     {{-- CATATAN DAN PEMBAYARAN --}}
                     <div class="row mt-4">
-                        <div class="col-md-5 mb-2">
+                        <div class="col-5 mb-2">
                             <div class="card border-secondary">
                                 <small class="mx-2 text-muted">Remark:</small> <br>
                                 <p class="m-2">{{ $data->remark }}</p>
                             </div>
                         </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-5 mb-2">
+                        <div class="col-2"></div>
+                        <div class="col-5 mb-2">
                             <table class="table table-sm table-striped" width="100%">
                                 <tr>
                                     <td width="29%"><strong>Total</strong></td>
@@ -128,4 +132,19 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function printArea() {
+            const printContent = document.getElementById('print-area').innerHTML;
+            const originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContent;
+
+            window.print()
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
 @endsection

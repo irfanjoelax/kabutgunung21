@@ -89,6 +89,13 @@
                             <span class="ms-1">Pengeluaran</span>
                         </a>
                     </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/laporan') }}">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span class="ms-1">Laporan</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

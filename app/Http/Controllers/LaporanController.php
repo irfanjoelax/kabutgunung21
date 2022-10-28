@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Pengeluaran;
 use App\Models\Penjualan;
-use App\Models\Produk;
 use Illuminate\Http\Request;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
-class DashboardController extends Controller
+class LaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $awal  = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
         $akhir = date('Y-m-d');
 
+        if ($request->awal != null && $request->akhir != null) {
+            $awal  = $request->awal;
+            $akhir = $request->akhir;
+        }
+
         $data              = array();
-        $data_tanggal      = array();
         $pendapatan        = 0;
         $total_pendapatan  = 0;
         $grand_penjualan   = 0;
@@ -44,40 +45,14 @@ class DashboardController extends Controller
             $data[] = $row;
         }
 
-        $options1 = [
-            'chart_title' => 'Grafik Penjualan',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Penjualan',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
-            'aggregate_function' => 'sum',
-            'aggregate_field' => 'grand_total',
-            'chart_type' => 'bar',
-        ];
-
-        $chart1 = new LaravelChart($options1);
-
-        $options2 = [
-            'chart_title' => 'Grafik Pengeluaran',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Pengeluaran',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
-            'aggregate_function' => 'sum',
-            'aggregate_field' => 'nominal',
-            'chart_type' => 'bar',
-        ];
-
-        $chart2 = new LaravelChart($options2);
-
-        return view('admin.dashboard', [
-            'activeMenu'        => 'dashboard',
-            'total_produk'      => Produk::count(),
+        return view('admin.laporan.index', [
+            'activeMenu'        => 'laporan',
+            'awal'              => $awal,
+            'akhir'             => $akhir,
+            'data'              => $data,
             'grand_penjualan'   => $grand_penjualan,
             'grand_pengeluaran' => $grand_pengeluaran,
             'grand_pendapatan'  => $total_pendapatan,
-            'chart1'            => $chart1,
-            'chart2'            => $chart2,
         ]);
     }
 }
