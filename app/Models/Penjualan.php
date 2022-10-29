@@ -34,4 +34,9 @@ class Penjualan extends Model
     {
         return $this->hasMany('App\Models\PenjualanDetail');
     }
+
+    public function marketplace()
+    {
+        return $this->hasOne('App\Models\Marketplace', 'id', 'marketplace_id');
+    }
 }

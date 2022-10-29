@@ -46,7 +46,7 @@
                             <tr>
                                 <td width="19%"><strong>Marketplace</strong></td>
                                 <td width="1%">:</td>
-                                <td width="71%" colspan="4">{{ $data->marketplace_id }}</td>
+                                <td width="71%" colspan="4">{{ $data->marketplace->name }}</td>
                             </tr>
                             <tr>
                                 <td width="19%"><strong>Kurir</strong></td>
@@ -97,8 +97,8 @@
                     <div class="row mt-4">
                         <div class="col-5 mb-2">
                             <div class="card border-secondary">
-                                <small class="mx-2 text-muted">Remark:</small> <br>
-                                <p class="m-2">{{ $data->remark }}</p>
+                                <small class="mx-2 text-muted">Remark:</small>
+                                <p class="mx-2 mt-2">{{ $data->remark }}</p>
                             </div>
                         </div>
                         <div class="col-2"></div>

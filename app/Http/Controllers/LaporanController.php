@@ -20,30 +20,41 @@ class LaporanController extends Controller
 
         $data              = array();
         $pendapatan        = 0;
+        $total_penjualan   = 0;
+        $total_pengeluaran = 0;
         $total_pendapatan  = 0;
         $grand_penjualan   = 0;
         $grand_pengeluaran = 0;
+        $grand_pendapatan  = 0;
 
         while (strtotime($awal) <= strtotime($akhir)) {
             $tanggal = $awal;
             $awal    = date('Y-m-d', strtotime("+1 day", strtotime($awal)));
 
-            $total_penjualan   = Penjualan::where('created_at', 'LIKE', "$tanggal%")->sum('grand_total');
-            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "$tanggal%")->sum('nominal');
+            $penjualan   = Penjualan::where('created_at', 'LIKE', "$tanggal%")->sum('total');
+            $pengeluaran = Penjualan::where('created_at', 'LIKE', "$tanggal%")->sum('fee');
+            $pendapatan = Penjualan::where('created_at', 'LIKE', "$tanggal%")->sum('grand_total');
+            // $total_penjualan   = Penjualan::where('created_at', 'LIKE', "$tanggal%")->sum('grand_total');
+            // $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "$tanggal%")->sum('nominal');
 
-            $pendapatan        = $total_penjualan - $total_pengeluaran;
-            $total_pendapatan += $pendapatan;
+            // $pendapatan        = $total_penjualan - $total_pengeluaran;
+            // $total_pendapatan += $pendapatan;
 
-            $grand_penjualan += $total_penjualan;
-            $grand_pengeluaran += $total_pengeluaran;
+            $total_penjualan   += $penjualan;
+            $total_pengeluaran += $pengeluaran;
+            $total_pendapatan  += $pendapatan;
 
             $row = [];
             $row['tanggal'] = $tanggal;
-            $row['total_penjualan'] = $total_penjualan;
-            $row['total_pengeluaran'] = $total_pengeluaran;
+            $row['total_penjualan'] = $penjualan;
+            $row['total_pengeluaran'] = $pengeluaran;
             $row['total_pendapatan'] = $pendapatan;
             $data[] = $row;
         }
+
+        $grand_penjualan = $total_penjualan;
+        $grand_pengeluaran = $total_pengeluaran;
+        $grand_pendapatan = $total_pendapatan;
 
         return view('admin.laporan.index', [
             'activeMenu'        => 'laporan',
@@ -52,7 +63,8 @@ class LaporanController extends Controller
             'data'              => $data,
             'grand_penjualan'   => $grand_penjualan,
             'grand_pengeluaran' => $grand_pengeluaran,
-            'grand_pendapatan'  => $total_pendapatan,
+            'grand_pendapatan'  => $grand_pendapatan,
         ]);
+        // dd($grand_pengeluaran);
     }
 }

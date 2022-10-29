@@ -28,14 +28,14 @@
                     <tr class="text-center py-3">
                         <th class="py-3" width="40%">Tanggal</th>
                         <th class="py-3" width="20%"><span class="text-primary">Penjualan</span></th>
-                        <th class="py-3" width="20%"><span class="text-danger">Pengeluaran</span></th>
+                        <th class="py-3" width="20%"><span class="text-danger">Fee (Biaya)</span></th>
                         <th class="py-3" width="20%"><span class="text-success">Pendapatan</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td class="text-center">{{ tanggal($item['tanggal']) }}</td>
+                            <td class="text-center">{{ tanggal($item['tanggal'], true) }}</td>
                             <td class="text-primary">
                                 Rp. <span class="float-end">{{ number_format($item['total_penjualan']) }}</span>
                             </td>

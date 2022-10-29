@@ -57,10 +57,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-md-6 col-12 mb-2">
-                <div class="card border border-warning shadow mb-4">
-                    <div class="card-header bg-warning text-white">
+                <div class="card border border-primary shadow mb-4">
+                    <div class="card-header bg-primary text-white">
                         <h6 class="m-0 font-weight-bold">Grafik Penjualan</h6>
                     </div>
                     <div class="card-body">
@@ -71,13 +71,40 @@
                 </div>
             </div>
             <div class="col-md-6 col-12 mb-2">
-                <div class="card border border-danger shadow mb-4">
-                    <div class="card-header bg-danger text-white">
+                <div class="card border border-warning shadow mb-4">
+                    <div class="card-header bg-warning text-white">
                         <h6 class="m-0 font-weight-bold">Grafik Pengeluaran</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
                             {!! $chart2->renderHtml() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-6 col-12 mb-2">
+                <div class="card border border-success shadow mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="m-0 font-weight-bold">Marketplace Terlaris</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            {!! $chart3->renderHtml() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-12 mb-2">
+                <div class="card border border-danger shadow mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h6 class="m-0 font-weight-bold">Produk Terlaris</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            {!! $chart4->renderHtml() !!}
                         </div>
                     </div>
                 </div>
@@ -90,4 +117,6 @@
     {!! $chart1->renderChartJsLibrary() !!}
     {!! $chart1->renderJs() !!}
     {!! $chart2->renderJs() !!}
+    {!! $chart3->renderJs() !!}
+    {!! $chart4->renderJs() !!}
 @endsection

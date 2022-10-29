@@ -52,7 +52,7 @@ class DashboardController extends Controller
             'group_by_period' => 'day',
             'aggregate_function' => 'sum',
             'aggregate_field' => 'grand_total',
-            'chart_type' => 'bar',
+            'chart_type' => 'line',
         ];
 
         $chart1 = new LaravelChart($options1);
@@ -65,10 +65,36 @@ class DashboardController extends Controller
             'group_by_period' => 'day',
             'aggregate_function' => 'sum',
             'aggregate_field' => 'nominal',
-            'chart_type' => 'bar',
+            'chart_type' => 'line',
         ];
 
         $chart2 = new LaravelChart($options2);
+
+        $options3 = [
+            'chart_title'       => 'Marketplace',
+            'report_type'       => 'group_by_relationship',
+            'model'             => 'App\Models\Penjualan',
+            'relationship_name' => 'marketplace',
+            'group_by_field'    => 'name',
+            'chart_type'        => 'pie',
+            'filter_field'      => 'created_at',
+            'filter_period'     => 'month',
+        ];
+
+        $chart3 = new LaravelChart($options3);
+
+        $options4 = [
+            'chart_title'       => 'Produk Terlaris',
+            'report_type'       => 'group_by_relationship',
+            'model'             => 'App\Models\PenjualanDetail',
+            'relationship_name' => 'produk',
+            'group_by_field'    => 'nama',
+            'chart_type'        => 'bar',
+            'filter_field'      => 'created_at',
+            'filter_period'     => 'month',
+        ];
+
+        $chart4 = new LaravelChart($options4);
 
         return view('admin.dashboard', [
             'activeMenu'        => 'dashboard',
@@ -78,6 +104,8 @@ class DashboardController extends Controller
             'grand_pendapatan'  => $total_pendapatan,
             'chart1'            => $chart1,
             'chart2'            => $chart2,
+            'chart3'            => $chart3,
+            'chart4'            => $chart4,
         ]);
     }
 }

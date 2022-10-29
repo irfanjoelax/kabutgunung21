@@ -151,6 +151,12 @@
         @yield('content')
     </main>
 
+    <footer class="">
+        <p class="mt-5 mb-3 text-muted text-center">
+            Powered by <strong class="text-primary">{{ env('APP_COPYRIGHT') }}</strong> &copy; {{ date('Y') }}
+        </p>
+    </footer>
+
     @include('sweetalert::alert')
     @yield('script')
 </body>

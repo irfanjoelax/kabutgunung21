@@ -35,7 +35,9 @@ class ProdukController extends Controller
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($produk->harga_beli) . '</span>
                 </p>';
-                $row[] = '<p class="text-end ' . $this->checkStok($produk->stok) . '">' . $produk->stok . '</p>';
+                $row[] = '<p class="text-end ' . $this->checkStok($produk->stok) . '">
+                    <strong>' . $produk->stok . '</strong>
+                </p>';
                 $row[] = '<p class="text-center">
                     <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
                         Ubah

@@ -1,28 +1,37 @@
 <div>
     @if (session('alert'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><i class="fa-solid fa-triangle-exclamation"></i></strong> {{ session('alert') }}
+            <strong class="me-2"><i class="fa-solid fa-triangle-exclamation"></i></strong> {{ session('alert') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <form class="row g-3 align-items-center" wire:submit.prevent="submit">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-5 mb-3">
             <div class="input-group input-group-sm">
                 <div class="input-group-text">
                     Produk
                 </div>
-                <select wire:model="produk_id" class="form-select @error('produk_id') is-invalid @enderror">
-                    <option value="" selected>-- Pilih Nama Produk --</option>
-                    @foreach ($produks as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                    @endforeach
-                </select>
+                <input class="form-control @error('produk_sku') is-invalid @enderror" type="text"
+                    wire:model="produk_sku" placeholder="Masukkan SKU Produk" wire:keydown="showStok">
             </div>
-            @error('produk_id')
+            @error('produk_sku')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-        <div class="col-md-2 mb-3">
+        <div class="col-md-1 mb-3">
+            <div class="input-group input-group-sm">
+                <div class="input-group-text">
+                    <div wire:loading wire:target="showStok">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </div>
+                    <div wire:loading.remove wire:target="showStok">
+                        Stok
+                    </div>
+                </div>
+                <input class="form-control text-end readonly" type="text" wire:model="stok" readonly>
+            </div>
+        </div>
+        <div class="col-md-1 mb-3">
             <div class="input-group input-group-sm">
                 <div class="input-group-text">
                     Qty
@@ -34,7 +43,7 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-md-2 mb-3">
             <div class="input-group input-group-sm">
                 <div class="input-group-text">
                     Harga Jual
