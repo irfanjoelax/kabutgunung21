@@ -47,13 +47,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
+                    @php
+                        if (Auth::user()->level == 'admin') {
+                            $dashboard = 'admin';
+                        }
+                        if (Auth::user()->level == 'owner') {
+                            $dashboard = 'owner';
+                        }
+                    @endphp
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'dashboard' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/dashboard') }}">
+                            href="{{ url('admin/dashboard-' . $dashboard) }}">
                             <i class="fa-solid fa-gauge"></i>
                             <span class="ms-1">Dashboard</span>
                         </a>
                     </li>
+
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'kategori' ? 'bg-warning text-white rounded' : '' }}"
                             href="{{ url('admin/kategori') }}">
@@ -75,13 +84,15 @@
                             <span class="ms-1">Produk</span>
                         </a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link {{ $activeMenu == 'user' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/user') }}">
-                            <i class="fa-solid fa-users"></i>
-                            <span class="ms-1">User</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->level == 'owner')
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'user' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/user') }}">
+                                <i class="fa-solid fa-users"></i>
+                                <span class="ms-1">User</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'penjualan' ? 'bg-warning text-white rounded' : '' }}"
                             href="{{ url('admin/penjualan') }}">
@@ -96,13 +107,15 @@
                             <span class="ms-1">Pengeluaran</span>
                         </a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/laporan') }}">
-                            <i class="fa-solid fa-file-lines"></i>
-                            <span class="ms-1">Laporan</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->level == 'owner')
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/laporan') }}">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <span class="ms-1">Laporan</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->

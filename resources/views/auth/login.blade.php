@@ -35,7 +35,8 @@
 
         <div class="form-label-group">
             <input type="text" name="username" id="username"
-                class="form-control @error('username') is-invalid @enderror" placeholder="Username" required autofocus>
+                class="form-control @error('username') is-invalid @enderror" placeholder="Username"
+                value="{{ old('username') }}" required autofocus>
             <label for="inputEmail">Username</label>
             @error('username')
                 <span class="invalid-feedback" role="alert">

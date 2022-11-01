@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Pengeluaran;
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
-use App\Models\Produk;
-use Illuminate\Http\Request;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function admin()
+    {
+        return view('admin.dashboard-admin', [
+            'activeMenu' => 'dashboard',
+        ]);
+    }
+
+    public function owner()
     {
         $awal  = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
         $akhir = date('Y-m-d');
@@ -84,7 +89,7 @@ class DashboardController extends Controller
             ->limit(15)
             ->get();
 
-        return view('admin.dashboard', [
+        return view('admin.dashboard-owner', [
             'activeMenu'        => 'dashboard',
             'grand_modal'       => $grand_modal,
             'grand_penjualan'   => $grand_penjualan,

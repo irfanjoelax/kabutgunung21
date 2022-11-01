@@ -18,10 +18,18 @@ class UserSeeder extends Seeder
     {
         User::create([
             'id'       => Str::uuid(),
-            'name'     => 'Administrator/Owner',
+            'name'     => 'Admin / Karyawan',
             'username' => 'admin',
             'password' => Hash::make('admin'),
             'level'    => 'admin'
+        ]);
+
+        User::create([
+            'id'       => Str::uuid(),
+            'name'     => 'Owner Toko',
+            'username' => 'owner',
+            'password' => Hash::make('owner'),
+            'level'    => 'owner'
         ]);
     }
 }

@@ -9,15 +9,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 /**
- * GROUP ROUTE ADMINISTRATOR
+ * GROUP ROUTE FOR AUTHENTICATION
  */
 Route::middleware(['auth'])->group(function () {
-    // DASHBOARD ADMIN
-    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
-
+    /**
+     * SEMUA LEVEL USER AKTIF
+     */
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // UPDATE PROFILE
     Route::get('/admin/profile', [App\Http\Controllers\ProfileController::class, 'index']);
     Route::post('/admin/profile', [App\Http\Controllers\ProfileController::class, 'update']);
@@ -43,13 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
     Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
 
-    // MASTER DATA USER
-    Route::get('/admin/user', [App\Http\Controllers\UserController::class, 'index']);
-    Route::get('/admin/user/create', [App\Http\Controllers\UserController::class, 'create']);
-    Route::get('/admin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
-    Route::post('/admin/user/submit/{id?}', [App\Http\Controllers\UserController::class, 'submit']);
-    Route::get('/admin/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
-
     // MASTER DATA PENGELUARAN
     Route::get('/admin/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index']);
     Route::get('/admin/pengeluaran/create', [App\Http\Controllers\PengeluaranController::class, 'create']);
@@ -65,6 +57,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
     Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
 
-    // MASTER DATA LAPORAN
-    Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);
+    /**
+     * KHUSUS LEVEL ADMIN/KARYAWAN
+     */
+    Route::middleware(['checkuser:admin'])->group(function () {
+        // DASHBOARD ADMIN
+        Route::get('/admin/dashboard-admin', [App\Http\Controllers\Admin\DashboardController::class, 'admin']);
+    });
+
+
+    /**
+     * KHUSUS LEVEL OWNER
+     */
+    Route::middleware(['checkuser:owner'])->group(function () {
+        // DASHBOARD OWNER
+        Route::get('/admin/dashboard-owner', [App\Http\Controllers\Admin\DashboardController::class, 'owner']);
+
+        // MASTER DATA USER
+        Route::get('/admin/user', [App\Http\Controllers\UserController::class, 'index']);
+        Route::get('/admin/user/create', [App\Http\Controllers\UserController::class, 'create']);
+        Route::get('/admin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+        Route::post('/admin/user/submit/{id?}', [App\Http\Controllers\UserController::class, 'submit']);
+        Route::get('/admin/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
+
+        // MASTER DATA LAPORAN
+        Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);
+    });
 });
