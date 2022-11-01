@@ -18,7 +18,7 @@ class CheckLevelUser
     public function handle(Request $request, Closure $next, $level)
     {
         if (Auth::user()->level != $level) {
-            return abort(403);
+            return abort(401);
         }
 
         return $next($request);

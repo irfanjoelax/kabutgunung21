@@ -8,10 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ url('admin/produk/create') }}" class="btn btn-primary mb-3">
-                    <i class="fa-solid fa-plus"></i>
-                    <span class="ms-1">Tambah</span>
-                </a>
+                @if (Auth::user()->level == 'owner')
+                    <a href="{{ url('admin/produk/create') }}" class="btn btn-primary mb-3">
+                        <i class="fa-solid fa-plus"></i>
+                        <span class="ms-1">Tambah</span>
+                    </a>
+                @endif
                 <div class="bg-white p-3 rounded shadow-sm table-responsive">
                     <table class="table table-bordered datatable align-middle">
                         <thead class="bg-primary text-white">
@@ -19,9 +21,13 @@
                                 <th width="7%" class="text-center">No.</th>
                                 <th width="35%" class="text-start">Nama Produk / SKU</th>
                                 <th width="20%" class="text-center">Kategori</th>
-                                <th width="15%" class="text-start">Hrg. Beli</th>
+                                @if (Auth::user()->level == 'owner')
+                                    <th width="15%" class="text-start">Hrg. Beli</th>
+                                @endif
                                 <th width="8%" class="text-start">Stok</th>
-                                <th width="15%" class="text-center">Action</th>
+                                @if (Auth::user()->level == 'owner')
+                                    <th width="15%" class="text-center">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody></tbody>

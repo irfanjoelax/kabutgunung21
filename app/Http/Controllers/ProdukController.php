@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -32,20 +33,24 @@ class ProdukController extends Controller
                     <small class="text-muted">' . $produk->sku . '</small>
                 </p>';
                 $row[] = '<p class="text-center">' . $produk->kategori->name . '</p>';
-                $row[] = '<p class="text-start">
-                    Rp. <span class="float-end">' . number_format($produk->harga_beli) . '</span>
-                </p>';
+                if (Auth::user()->level == 'owner') {
+                    $row[] = '<p class="text-start">
+                        Rp. <span class="float-end">' . number_format($produk->harga_beli) . '</span>
+                    </p>';
+                }
                 $row[] = '<p class="text-end ' . $this->checkStok($produk->stok) . '">
                     <strong>' . $produk->stok . '</strong>
                 </p>';
-                $row[] = '<p class="text-center">
-                    <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
-                        Ubah
-                    </a>
-                    <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
-                        Hapus
-                    </a>    
-                </p>';
+                if (Auth::user()->level == 'owner') {
+                    $row[] = '<p class="text-center">
+                        <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
+                            Ubah
+                        </a>
+                        <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
+                            Hapus
+                        </a>    
+                    </p>';
+                }
 
                 $data[] = $row;
             }

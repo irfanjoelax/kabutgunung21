@@ -38,9 +38,7 @@ Route::middleware(['auth'])->group(function () {
     // MASTER DATA PRODUK
     Route::get('/admin/produk', [App\Http\Controllers\ProdukController::class, 'index']);
     Route::get('/admin/produk/create', [App\Http\Controllers\ProdukController::class, 'create']);
-    Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
-    Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
-    Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
+
 
     // MASTER DATA PENGELUARAN
     Route::get('/admin/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index']);
@@ -79,6 +77,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
         Route::post('/admin/user/submit/{id?}', [App\Http\Controllers\UserController::class, 'submit']);
         Route::get('/admin/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
+
+        // MASTER DATA PRODUK
+        Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
+        Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
+        Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
 
         // MASTER DATA LAPORAN
         Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);
