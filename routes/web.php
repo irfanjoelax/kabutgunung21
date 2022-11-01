@@ -43,6 +43,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
     Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
 
+    // MASTER DATA USER
+    Route::get('/admin/user', [App\Http\Controllers\UserController::class, 'index']);
+    Route::get('/admin/user/create', [App\Http\Controllers\UserController::class, 'create']);
+    Route::get('/admin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::post('/admin/user/submit/{id?}', [App\Http\Controllers\UserController::class, 'submit']);
+    Route::get('/admin/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
+
     // MASTER DATA PENGELUARAN
     Route::get('/admin/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index']);
     Route::get('/admin/pengeluaran/create', [App\Http\Controllers\PengeluaranController::class, 'create']);
