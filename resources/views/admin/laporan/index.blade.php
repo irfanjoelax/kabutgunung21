@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <form class="row row-cols-lg-auto g-3 align-items-center mb-3 mt-2" method="GET" action="{{ url('admin/laporan') }}">
             <div class="col-12">
                 <div class="input-group">
@@ -26,18 +26,26 @@
             <table class="table table-sm table-striped table-bordered" width="100%" cellspacing="0">
                 <thead class="bg-white text-dark">
                     <tr class="text-center py-3">
-                        <th class="py-3" width="40%">Tanggal</th>
-                        <th class="py-3" width="20%"><span class="text-primary">Penjualan</span></th>
-                        <th class="py-3" width="20%"><span class="text-danger">Fee (Biaya)</span></th>
-                        <th class="py-3" width="20%"><span class="text-success">Pendapatan</span></th>
+                        <th class="py-3" width="33%">Tanggal</th>
+                        <th class="py-3" width="15%"><span class="text-warning">Modal</span></th>
+                        <th class="py-3" width="15%"><span class="text-info">Penjualan</span></th>
+                        <th class="py-3" width="10%"><span class="text-danger">Fee (Biaya)</span></th>
+                        <th class="py-3" width="12%"><span class="text-danger">Pengeluaran</span></th>
+                        <th class="py-3" width="15%"><span class="text-success">Pendapatan</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td class="text-center">{{ tanggal($item['tanggal'], true) }}</td>
-                            <td class="text-primary">
+                            <td class="text-center">{{ tanggal($item['tanggal']) }}</td>
+                            <td class="text-warning">
+                                Rp. <span class="float-end">{{ number_format($item['total_modal']) }}</span>
+                            </td>
+                            <td class="text-info">
                                 Rp. <span class="float-end">{{ number_format($item['total_penjualan']) }}</span>
+                            </td>
+                            <td class="text-danger">
+                                Rp. <span class="float-end">{{ number_format($item['total_fee']) }}</span>
                             </td>
                             <td class="text-danger">
                                 Rp. <span class="float-end">{{ number_format($item['total_pengeluaran']) }}</span>
@@ -49,22 +57,32 @@
                     @endforeach
                     <tr class="bg-white text-dark">
                         <td class="text-center py-3">
-                            <h4 class="fw-bold">Grand Total</h4>
+                            <h5 class="fw-bold">Grand Total</h5>
                         </td>
-                        <td class="text-primary py-3">
-                            <h4 class="fw-bold">
+                        <td class="text-warning py-3">
+                            <h5 class="fw-bold">
+                                Rp. <span class="float-end">{{ number_format($grand_modal) }}</span>
+                            </h5>
+                        </td>
+                        <td class="text-info py-3">
+                            <h5 class="fw-bold">
                                 Rp. <span class="float-end">{{ number_format($grand_penjualan) }}</span>
-                            </h4>
+                            </h5>
                         </td>
                         <td class="text-danger py-3">
-                            <h4 class="fw-bold">
+                            <h5 class="fw-bold">
+                                Rp. <span class="float-end">{{ number_format($grand_fee) }}</span>
+                            </h5>
+                        </td>
+                        <td class="text-danger py-3">
+                            <h5 class="fw-bold">
                                 Rp. <span class="float-end">{{ number_format($grand_pengeluaran) }}</span>
-                            </h4>
+                            </h5>
                         </td>
                         <td class="text-success py-3">
-                            <h4 class="fw-bold">
+                            <h5 class="fw-bold">
                                 Rp. <span class="float-end">{{ number_format($grand_pendapatan) }}</span>
-                            </h4>
+                            </h5>
                         </td>
                     </tr>
                 </tbody>

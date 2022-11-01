@@ -13,13 +13,6 @@
                 @enderror
             </div>
             <div class="col-md-12">
-                <label class="form-label">Nama Customer</label>
-                <input type="text" class="form-control" wire:model="nama_customer">
-                @error('nama_customer')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-12">
                 <label class="form-label">Market Place</label>
                 <select wire:model="marketplace_id" class="form-select">
                     <option value="" selected>-- Pilih Nama Market Place --</option>
@@ -28,6 +21,20 @@
                     @endforeach
                 </select>
                 @error('marketplace_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Jasa Kurir</label>
+                <input type="text" class="form-control" wire:model="kurir" placeholder="JNE / J&T / TIKI ...">
+                @error('kurir')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">No. Resi</label>
+                <input type="text" class="form-control" wire:model="no_resi">
+                @error('no_resi')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>

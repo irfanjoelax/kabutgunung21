@@ -19,10 +19,9 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="text-start">
                             <img src="{{ asset(env('APP_LOGO')) }}" class="" width="50">
-                            <h3 class="mt-2 fw-bold text-primary">
+                            <h3 class="mt-2 fw-bolder text-primary">
                                 {{ env('APP_NAME') }}
                             </h3>
-                            <small class="text-muted">Kontak: 0831 4061 7623</small>
                         </div>
                         <div class="text-end">
                             <h2 class="fw-bold">Detail Transaksi</h2>
@@ -38,11 +37,6 @@
                     {{-- INFORMATION CUSTOMER DAN KURIR --}}
                     <div class="table-responsive mt-4">
                         <table class="table table-sm table-borderless" width="100%">
-                            <tr>
-                                <td width="19%"><strong>Nama Customer</strong></td>
-                                <td width="1%">:</td>
-                                <td width="71%" colspan="4">{{ $data->nama_customer }}</td>
-                            </tr>
                             <tr>
                                 <td width="19%"><strong>Marketplace</strong></td>
                                 <td width="1%">:</td>

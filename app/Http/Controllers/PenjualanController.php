@@ -13,7 +13,7 @@ class PenjualanController extends Controller
     private function checkStatusKurir($value, $url)
     {
         if ($value == 'BELUM TERKIRIM') {
-            return '<a href="' . url($url) . '" class="badge bg-warning text-decoration-none">' . $value . '</a>';
+            return '<a onclick="return confirm(`Apakah benar penjualan ini telah dikirimkan ke jasa kurir?`)" href="' . url($url) . '" class="badge bg-warning text-decoration-none">' . $value . '</a>';
         } else {
             return '<span class="badge bg-success">' . $value . '</span>';
         }
@@ -49,7 +49,7 @@ class PenjualanController extends Controller
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
                 </p>';
-                $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/edit/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
+                $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
                 $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
                 $row[] = '<p class="text-center">
                     <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
@@ -108,20 +108,9 @@ class PenjualanController extends Controller
         return redirect('/admin/penjualan');
     }
 
-    public function editKurir($id)
-    {
-        return view('admin.penjualan.kurir', [
-            'activeMenu' => 'penjualan',
-            'data'       => Penjualan::find($id),
-            'url'        => url('admin/penjualan/update/kurir/' . $id)
-        ]);
-    }
-
-    public function updateKurir(Request $request, $id)
+    public function updateKurir($id)
     {
         Penjualan::find($id)->update([
-            'kurir'        => $request->kurir,
-            'no_resi'      => $request->no_resi,
             'status_kurir' => 'TERKIRIM',
         ]);
 

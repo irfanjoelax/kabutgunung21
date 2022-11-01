@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class SubmitForm extends Component
 {
-    public $penjualan_id, $no_pesanan, $nama_customer, $marketplace_id, $remark, $fee = 0, $total, $grand_total;
+    public $penjualan_id, $no_pesanan, $kurir, $no_resi, $marketplace_id, $remark, $modal, $fee = 0, $total, $grand_total;
 
     protected $listeners = [
         'reloadSubmit'  => 'mount'
@@ -18,14 +18,16 @@ class SubmitForm extends Component
 
     protected $rules = [
         'no_pesanan'     => 'required',
-        'nama_customer'  => 'required',
+        'kurir'          => 'required',
+        'no_resi'        => 'required',
         'marketplace_id' => 'required',
         'fee'            => 'required|numeric',
     ];
 
     protected $messages = [
         'no_pesanan.required'     => 'No Pesanan harus di isi',
-        'nama_customer.required'  => 'Nama Customer harus di isi',
+        'kurir.required'          => 'Jasa kurir harus di isi',
+        'no_resi.required'        => 'Nomor Resi harus di isi',
         'marketplace_id.required' => 'Marketplace harus di isi',
         'fee.required'            => 'Fee (biaya penjualan) harus di isi',
         'fee.numeric'             => 'Fee (biaya penjualan) harus angka',
@@ -42,8 +44,10 @@ class SubmitForm extends Component
         $penjualan = Penjualan::find($this->penjualan_id);
 
         $this->no_pesanan     = $penjualan->no_pesanan;
-        $this->nama_customer  = $penjualan->nama_customer;
         $this->marketplace_id = $penjualan->marketplace_id;
+        $this->kurir          = $penjualan->kurir;
+        $this->no_resi        = $penjualan->no_resi;
+        $this->modal          = $penjualan->modal;
         $this->fee            = $penjualan->fee;
         $this->remark         = $penjualan->remark;
         $this->grand_total    = $this->total - $this->fee;
@@ -58,9 +62,15 @@ class SubmitForm extends Component
 
     public function submit()
     {
+
         $this->validate();
 
+        $modal = 0;
         $penjualan    = Penjualan::find($this->penjualan_id);
+        foreach ($penjualan->penjualan_details as $item) {
+            $modal += $item->produk->harga_beli  * $item->qty;
+        }
+
         $status_kurir = $penjualan->status_kurir;
         $status_bayar = $penjualan->status_bayar;
 
@@ -74,9 +84,11 @@ class SubmitForm extends Component
 
         $penjualan->update([
             'no_pesanan'     => $this->no_pesanan,
-            'nama_customer'  => $this->nama_customer,
+            'kurir'          => $this->kurir,
+            'no_resi'        => $this->no_resi,
             'marketplace_id' => $this->marketplace_id,
             'status_kurir'   => $status_kurir,
+            'modal'          => $modal,
             'total'          => $this->total,
             'fee'            => $this->fee,
             'grand_total'    => $this->grand_total,

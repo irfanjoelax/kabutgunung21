@@ -7,9 +7,9 @@
                 <div class="card border-0 shadow p-0">
                     <div class="d-flex align-item-center justify-content-between">
                         <div class="align-self-center px-3">
-                            <span class="text-muted">Produk</span>
+                            <span class="text-muted">Modal</span>
                             <h4 class="text-primary m-0 fw-bold">
-                                {{ number_format($total_produk) }} Item
+                                Rp. {{ number_format($grand_modal) }}
                             </h4>
                         </div>
                         <img src="https://img.icons8.com/bubbles/100/000000/open-box.png" />
@@ -103,8 +103,19 @@
                         <h6 class="m-0 font-weight-bold">Produk Terlaris</h6>
                     </div>
                     <div class="card-body">
-                        <div class="chart-area">
-                            {!! $chart4->renderHtml() !!}
+                        <div class="table-responsive">
+                            <table class="table table-striped" width="100%">
+                                @foreach ($produk_laris as $item)
+                                    <tr>
+                                        <td width="69%">{{ $item->produk->nama }}</td>
+                                        <td width="1%">:</td>
+                                        <td width="30%">
+                                            <strong>{{ $item->count_of_trx }}</strong> <small
+                                                class="text-muted">Transaksi</small>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -118,5 +129,4 @@
     {!! $chart1->renderJs() !!}
     {!! $chart2->renderJs() !!}
     {!! $chart3->renderJs() !!}
-    {!! $chart4->renderJs() !!}
 @endsection

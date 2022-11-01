@@ -55,8 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/penjualan/create', [App\Http\Controllers\PenjualanController::class, 'create']);
     Route::get('/admin/penjualan/show/{id}', [App\Http\Controllers\PenjualanController::class, 'show']);
     Route::get('/admin/penjualan/detail/{id}', [App\Http\Controllers\PenjualanController::class, 'detail']);
-    Route::get('/admin/penjualan/edit/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'editKurir']);
-    Route::post('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
+    Route::get('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
     Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
 
     // MASTER DATA LAPORAN
