@@ -55,7 +55,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-6 mb-2">
-                        <button type="submit" class="btn btn-primary  w-100">
+                        <button type="submit" class="btn btn-primary w-100" wire:loading.attr="disabled">
                             <div wire:loading wire:target="submit">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </div>

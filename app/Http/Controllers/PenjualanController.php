@@ -28,13 +28,22 @@ class PenjualanController extends Controller
         }
     }
 
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $penjualans = Penjualan::latest()->get();
+            // if ($tanggal != null && $status != null) {
+            //     $whereArr = [
+            //         ['created_at', 'like', $tanggal . '%'],
+            //         ['status_bayar', '=', $status],
+            //     ];
+
+            //     $penjualans = Penjualan::where($whereArr)->latest()->get();
+
+            //     $url = url('admin/penjualan?tanggal=' . $tanggal . '&status=' . $status);
+            // }
+
             $data       = [];
-            $no         = 1;
 
             foreach ($penjualans as $penjualan) {
                 $row = [];
@@ -66,10 +75,50 @@ class PenjualanController extends Controller
             return response()->json(["data" => $data]);
         }
 
-
         return view('admin.penjualan.index', [
-            'activeMenu' => 'penjualan'
+            'activeMenu' => 'penjualan',
         ]);
+    }
+
+    public function filter($tanggal, $status)
+    {
+        $whereArr = [
+            ['created_at', 'like', $tanggal . '%'],
+            ['status_bayar', '=', $status],
+        ];
+
+        $penjualans = Penjualan::where($whereArr)->latest()->get();
+
+        $data       = [];
+
+        foreach ($penjualans as $penjualan) {
+            $row = [];
+
+            $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
+            $row[] = '<p class="text-start">
+                    Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
+                </p>';
+            $row[] = '<p class="text-start">
+                    Rp. <span class="float-end">' . number_format($penjualan->fee) . '</span>
+                </p>';
+            $row[] = '<p class="text-start">
+                    Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
+                </p>';
+            $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
+            $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
+            $row[] = '<p class="text-center">
+                    <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id) . '" class="btn btn-sm btn-warning">
+                        <i class="fa-solid fa-edit"></i>
+                    </a>
+                </p>';
+
+            $data[] = $row;
+        }
+
+        return response()->json(["data" => $data]);
     }
 
     public function create()
