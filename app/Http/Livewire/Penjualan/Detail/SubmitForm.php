@@ -91,7 +91,7 @@ class SubmitForm extends Component
             'modal'          => $modal,
             'total'          => $this->total,
             'fee'            => $this->fee,
-            'grand_total'    => $this->grand_total,
+            'grand_total'    => $this->total - $this->fee,
             'status_bayar'   => $status_bayar,
             'remark'         => $this->remark,
         ]);

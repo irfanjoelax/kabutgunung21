@@ -46,7 +46,8 @@
                 <label class="form-label">Fee (Biaya) Penjualan</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Rp.</span>
-                    <input type="text" class="form-control" wire:model="fee" wire:keydown.tab="reloadTotal">
+                    {{-- <input type="text" class="form-control" wire:model.lazy="fee" wire:keydown="reloadTotal"> --}}
+                    <input type="text" class="form-control" wire:model="fee">
                 </div>
                 @error('fee')
                     <span class="text-danger">{{ $message }}</span>
