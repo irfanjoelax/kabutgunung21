@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect('login');
 });
 
 Auth::routes();
@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
      * SEMUA LEVEL USER AKTIF
      */
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     // UPDATE PROFILE
     Route::get('/admin/profile', [App\Http\Controllers\ProfileController::class, 'index']);
     Route::post('/admin/profile', [App\Http\Controllers\ProfileController::class, 'update']);
