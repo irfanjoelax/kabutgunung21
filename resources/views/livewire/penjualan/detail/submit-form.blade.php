@@ -54,18 +54,16 @@
                 @enderror
             </div>
             <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <button type="submit" class="btn btn-primary w-100" wire:loading.attr="disabled">
-                            <div wire:loading wire:target="submit">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </div>
-                            <div wire:loading.remove wire:target="submit">
-                                <i class="fa fa-check"></i> Simpan
-                            </div>
-                        </button>
-                    </div>
-                    <div class="col-md-6 mb-2">
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-primary w-100" wire:loading.attr="disabled">
+                        <div wire:loading wire:target="submit">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </div>
+                        <div wire:loading.remove wire:target="submit">
+                            <i class="fa fa-check"></i> Simpan
+                        </div>
+                    </button>
+                    @if (Auth::user()->level == 'owner')
                         <button type="button"
                             onclick="return confirm(`Apakah yakin ingin membatalkan dan menghapus penjualan ini?`) || event.stopImmediatePropagation()"
                             wire:click="cancel" class="btn btn-warning w-100">
@@ -76,7 +74,7 @@
                                 <i class="fa fa-times"></i> Batalkan
                             </div>
                         </button>
-                    </div>
+                    @endif
                 </div>
             </div>
         </form>
