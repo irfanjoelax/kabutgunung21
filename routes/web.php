@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /**
  * GROUP ROUTE FOR AUTHENTICATION
@@ -16,8 +17,6 @@ Route::middleware(['auth'])->group(function () {
     /**
      * SEMUA LEVEL USER AKTIF
      */
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
     // UPDATE PROFILE
     Route::get('/admin/profile', [App\Http\Controllers\ProfileController::class, 'index']);
     Route::post('/admin/profile', [App\Http\Controllers\ProfileController::class, 'update']);
