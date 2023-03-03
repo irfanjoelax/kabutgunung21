@@ -31,6 +31,11 @@ class LaporanController extends Controller
         $grand_pengeluaran = 0;
         $grand_pendapatan  = 0;
 
+        $grand_belum_bayar = Penjualan::where('created_at', '>=', $awal . " 00:00:00")
+            ->where('created_at', '<=', $akhir . " 23:59:59")
+            ->where('status_bayar', 'BELUM TERBAYAR')
+            ->sum('total');
+
         while (strtotime($awal) <= strtotime($akhir)) {
             $tanggal = $awal;
             $awal    = date('Y-m-d', strtotime("+1 day", strtotime($awal)));
@@ -73,7 +78,7 @@ class LaporanController extends Controller
             'grand_fee'         => $grand_fee,
             'grand_pengeluaran' => $grand_pengeluaran,
             'grand_pendapatan'  => $grand_pendapatan,
+            'grand_belum_bayar' => $grand_belum_bayar,
         ]);
-        // dd($grand_pengeluaran);
     }
 }

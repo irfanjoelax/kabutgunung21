@@ -33,16 +33,22 @@ class ProdukController extends Controller
                     <small class="text-muted">' . $produk->sku . '</small>
                 </p>';
                 $row[] = '<p class="text-center">' . $produk->kategori->name . '</p>';
+
                 if (Auth::user()->level == 'owner') {
                     $row[] = '<p class="text-start">
                         Rp. <span class="float-end">' . number_format($produk->harga_beli) . '</span>
                     </p>';
                 }
+
                 $row[] = '<p class="text-end ' . $this->checkStok($produk->stok) . '">
                     <strong>' . $produk->stok . '</strong>
                 </p>';
+
                 if (Auth::user()->level == 'owner') {
                     $row[] = '<p class="text-center">
+                        <a href="' . url('admin/produk/history/' . $produk->id) . '" class="btn btn-sm btn-warning">
+                            Histori
+                        </a>
                         <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
                             Ubah
                         </a>
@@ -82,6 +88,18 @@ class ProdukController extends Controller
             'url'        => url('admin/produk/submit/' . $id),
             'kategoris'  => Kategori::latest()->get(),
             'data'       => Produk::find($id),
+        ]);
+    }
+
+    public function history($id)
+    {
+        $data = Produk::with(['penjualan_details' => function ($query) {
+            $query->take(100);
+        }])->find($id);
+
+        return view('admin.produk.history', [
+            'activeMenu' => 'produk',
+            'data'       => $data,
         ]);
     }
 

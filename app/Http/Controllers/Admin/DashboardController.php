@@ -83,6 +83,11 @@ class DashboardController extends Controller
         ];
 
         $chart3 = new LaravelChart($options3);
+        // $produk_laris = PenjualanDetail::selectRaw('count(id) as count_of_trx, produk_id')
+        //     ->groupBy('produk_id')
+        //     ->orderBy('count_of_trx', 'DESC')
+        //     ->limit(15)
+        //     ->get();
         $produk_laris = PenjualanDetail::selectRaw('count(id) as count_of_trx, produk_id')
             ->groupBy('produk_id')
             ->orderBy('count_of_trx', 'DESC')

@@ -6,6 +6,7 @@ use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PenjualanController extends Controller
@@ -30,44 +31,71 @@ class PenjualanController extends Controller
 
     public function index(Request $request)
     {
+        $awal  = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
+        $akhir = date('Y-m-d');
+
         if ($request->ajax()) {
-            $penjualans = Penjualan::latest()->get();
-            // if ($tanggal != null && $status != null) {
-            //     $whereArr = [
-            //         ['created_at', 'like', $tanggal . '%'],
-            //         ['status_bayar', '=', $status],
-            //     ];
+            $penjualans = Penjualan::with('user')->where('created_at', '>=', $awal . " 00:00:00")
+                ->where('created_at', '<=', $akhir . " 23:59:59")
+                ->latest()->get();
 
-            //     $penjualans = Penjualan::where($whereArr)->latest()->get();
-
-            //     $url = url('admin/penjualan?tanggal=' . $tanggal . '&status=' . $status);
-            // }
-
-            $data       = [];
+            $data = [];
 
             foreach ($penjualans as $penjualan) {
                 $row = [];
 
-                $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
+                $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
+
+                $row[] = '<p class="text-center">' . $penjualan->user?->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
                 </p>';
-                $row[] = '<p class="text-start">
-                    Rp. <span class="float-end">' . number_format($penjualan->fee) . '</span>
-                </p>';
+
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
                 </p>';
-                $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
+
+                if (Auth::user()->level == 'owner') {
+                    $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
+                }
+
+                if (Auth::user()->level == 'admin') {
+                    $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . '<span class="badge bg-secondary">' . $penjualan->status_bayar . '</span></p>';
+                }
+
+
+
                 $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
-                $row[] = '<p class="text-center">
-                    <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
-                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id) . '" class="btn btn-sm btn-warning">
-                        <i class="fa-solid fa-edit"></i>
-                    </a>
-                </p>';
+
+                // if (Auth::user()->level == 'owner') {
+                //     $row[] = '<p class="text-center">
+                //         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                //             <i class="fa-solid fa-eye"></i>
+                //         </a>
+                //         <a href="' . url('admin/penjualan/detail/' . $penjualan->id) . '" class="btn btn-sm btn-warning">
+                //             <i class="fa-solid fa-edit"></i>
+                //         </a>
+                //     </p>';
+                // }
+                if (Auth::user()->level == 'owner') {
+                    $row[] = '<p class="text-center">
+                        <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a href="' . route('penjualan.detail', ['id' => $penjualan->id, 'type' => 'edit']) . '" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-edit"></i>
+                        </a>
+                    </p>';
+                }
+
+                if (Auth::user()->level == 'admin') {
+                    $row[] = '<p class="text-center">
+                        <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </p>';
+                }
 
                 $data[] = $row;
             }
@@ -77,17 +105,20 @@ class PenjualanController extends Controller
 
         return view('admin.penjualan.index', [
             'activeMenu' => 'penjualan',
+            'awal' => $awal,
+            'akhir' => $akhir,
         ]);
     }
 
-    public function filter($tanggal, $status)
+    public function filter($awal, $akhir, $status)
     {
         $whereArr = [
-            ['created_at', 'like', $tanggal . '%'],
+            ['created_at', '>=', $awal . " 00:00:00"],
+            ['created_at', '<=', $akhir . " 23:59:59"],
             ['status_bayar', '=', $status],
         ];
 
-        $penjualans = Penjualan::where($whereArr)->latest()->get();
+        $penjualans = Penjualan::with('user')->where($whereArr)->latest()->get();
 
         $data       = [];
 
@@ -95,15 +126,17 @@ class PenjualanController extends Controller
             $row = [];
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
+
+            $row[] = '<p class="text-start"><h6 class"fw-semibold">' . $penjualan->user?->name . '</h6><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+
             $row[] = '<p class="text-start">
-                    Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
-                </p>';
+                Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
+            </p>';
+
             $row[] = '<p class="text-start">
-                    Rp. <span class="float-end">' . number_format($penjualan->fee) . '</span>
-                </p>';
-            $row[] = '<p class="text-start">
-                    Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
-                </p>';
+                Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
+            </p>';
+
             $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . $this->checkStatusBayar($penjualan->status_bayar, 'admin/penjualan/update/bayar/' . $penjualan->id) . '</p>';
             $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
             $row[] = '<p class="text-center">
@@ -126,7 +159,11 @@ class PenjualanController extends Controller
         $id = Str::uuid();
         Penjualan::create(['id' => $id]);
 
-        return redirect('admin/penjualan/detail/' . $id);
+        // return redirect('admin/penjualan/detail/' . $id);
+        return redirect()->route('penjualan.detail', [
+            'id' => $id,
+            'type' => 'create'
+        ]);
     }
 
     public function detail($id)

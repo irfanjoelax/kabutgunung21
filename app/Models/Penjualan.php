@@ -39,4 +39,9 @@ class Penjualan extends Model
     {
         return $this->hasOne('App\Models\Marketplace', 'id', 'marketplace_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
 }

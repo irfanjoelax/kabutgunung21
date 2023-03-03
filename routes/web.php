@@ -51,10 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/penjualan', [App\Http\Controllers\PenjualanController::class, 'index']);
     Route::get('/admin/penjualan/create', [App\Http\Controllers\PenjualanController::class, 'create']);
     Route::get('/admin/penjualan/show/{id}', [App\Http\Controllers\PenjualanController::class, 'show']);
-    Route::get('/admin/penjualan/detail/{id}', [App\Http\Controllers\PenjualanController::class, 'detail']);
+    Route::get('/admin/penjualan/detail/{id}', [App\Http\Controllers\PenjualanController::class, 'detail'])
+        ->name('penjualan.detail');
     Route::get('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
     Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
-    Route::get('/admin/penjualan/{tanggal}/{status}', [App\Http\Controllers\PenjualanController::class, 'filter']);
+    Route::get('/admin/penjualan/{awal}/{akhir}/{status}', [App\Http\Controllers\PenjualanController::class, 'filter']);
 
     /**
      * KHUSUS LEVEL ADMIN/KARYAWAN
@@ -83,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
         Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
         Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
+        Route::get('/admin/produk/history/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
 
         // MASTER DATA LAPORAN
         Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);

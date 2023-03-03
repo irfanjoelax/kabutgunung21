@@ -2,11 +2,19 @@
 
 @section('content')
     <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <h3 class="fw-semibold">Total Belum Terbayar: Rp {{ number_format($grand_belum_bayar, 0, ',', '.') }}</h3>
+            </div>
+        </div>
+
         <form class="row row-cols-lg-auto g-3 align-items-center mb-3 mt-2" method="GET" action="{{ url('admin/laporan') }}">
             <div class="col-12">
                 <div class="input-group">
                     <div class="input-group-text">Mulai</div>
-                    <input type="date" class="form-control" name="awal" value="{{ $_REQUEST['awal'] ?? '' }}" required>
+                    <input type="date" class="form-control" name="awal" value="{{ $_REQUEST['awal'] ?? '' }}"
+                        required>
                 </div>
             </div>
             <div class="col-12">

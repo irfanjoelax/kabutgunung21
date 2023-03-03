@@ -16,9 +16,16 @@
                     <form class="row row-cols-lg-auto g-3 align-items-center" id="form-filter">
                         <div class="col-12">
                             <div class="input-group">
-                                <div class="input-group-text">Tanggal</div>
-                                <input type="date" class="form-control" name="tanggal" id="tanggal"
-                                    value="{{ $_REQUEST['tanggal'] ?? '' }}" required>
+                                <div class="input-group-text">Awal</div>
+                                <input type="date" class="form-control" name="awal" id="awal"
+                                    value="{{ $_REQUEST['awal'] ?? $awal }}" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <div class="input-group-text">Akhir</div>
+                                <input type="date" class="form-control" name="akhir" id="akhir"
+                                    value="{{ $_REQUEST['akhir'] ?? $akhir }}" required>
                             </div>
                         </div>
                         <div class="col-12">
@@ -40,9 +47,9 @@
                     <table class="table table-bordered datatable align-middle" width="100%">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th width="16%" class="text-center">No. Pesanan</th>
+                                <th width="16%" class="text-center">No. Pesanan/Invoice</th>
+                                <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
-                                <th width="10%" class="text-start">Fee</th>
                                 <th width="13%" class="text-start">Grand Total</th>
                                 <th width="21%" class="text-center">Status</th>
                                 <th width="20%" class="text-start">Remark</th>
@@ -80,10 +87,11 @@
             $('#form-filter').on('submit', function(event) {
                 event.preventDefault();
 
-                const tanggal = document.getElementById('tanggal').value;
+                const awal = document.getElementById('awal').value;
+                const akhir = document.getElementById('akhir').value;
                 const status = document.getElementById('status').value;
 
-                const urlFilter = "{{ url('admin/penjualan') }}" + "/" + tanggal + "/" + status;
+                const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status;
 
                 datatable.ajax.url(urlFilter).load()
             })

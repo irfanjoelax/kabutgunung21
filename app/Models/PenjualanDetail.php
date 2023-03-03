@@ -34,4 +34,9 @@ class PenjualanDetail extends Model
     {
         return $this->hasOne('App\Models\Produk', 'id', 'produk_id');
     }
+
+    public function penjualan()
+    {
+        return $this->belongsTo(Penjualan::class);
+    }
 }

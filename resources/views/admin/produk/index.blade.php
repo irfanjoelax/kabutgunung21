@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 @if (Auth::user()->level == 'owner')
@@ -19,14 +19,14 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th width="7%" class="text-center">No.</th>
-                                <th width="35%" class="text-start">Nama Produk / SKU</th>
+                                <th width="33%" class="text-start">Nama Produk / SKU</th>
                                 <th width="20%" class="text-center">Kategori</th>
                                 @if (Auth::user()->level == 'owner')
                                     <th width="15%" class="text-start">Hrg. Beli</th>
                                 @endif
                                 <th width="8%" class="text-start">Stok</th>
                                 @if (Auth::user()->level == 'owner')
-                                    <th width="15%" class="text-center">Action</th>
+                                    <th width="17%" class="text-center">Action</th>
                                 @endif
                             </tr>
                         </thead>

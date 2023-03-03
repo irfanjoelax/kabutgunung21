@@ -27,11 +27,14 @@
 <body>
     <!-- header -->
     <header class="py-md-2 py-1 bg-white">
-        <div class="container-fluid d-flex gap-md-3 gap-2 align-items-center">
-            <img src="{{ asset(env('APP_LOGO')) }}" class="" width="50">
-            <h1 class="m-0 fw-bold text-primary">
-                {{ env('APP_NAME') }}
-            </h1>
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <div class="d-flex gap-md-3 gap-2 align-items-center">
+                <img src="{{ asset(env('APP_LOGO')) }}" class="" width="50">
+                <h1 class="m-0 fw-bold text-primary">
+                    {{ env('APP_NAME') }}
+                </h1>
+            </div>
+            <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">version. 2</span></h5>
         </div>
     </header>
 

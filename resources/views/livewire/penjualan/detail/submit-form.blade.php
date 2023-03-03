@@ -6,6 +6,13 @@
         <hr>
         <form class="row g-3" wire:submit.prevent="submit">
             <div class="col-md-12">
+                <label class="form-label">No. Invoice</label>
+                <input type="text" class="form-control" wire:model="no_invoice" readonly>
+                @error('no_invoice')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-12">
                 <label class="form-label">No. Pesanan</label>
                 <input type="text" class="form-control" wire:model="no_pesanan">
                 @error('no_pesanan')

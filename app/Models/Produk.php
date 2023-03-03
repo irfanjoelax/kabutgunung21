@@ -34,4 +34,9 @@ class Produk extends Model
     {
         return $this->belongsTo('App\Models\Kategori');
     }
+
+    public function penjualan_details()
+    {
+        return $this->hasMany(PenjualanDetail::class);
+    }
 }
