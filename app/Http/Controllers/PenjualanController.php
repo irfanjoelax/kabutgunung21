@@ -46,7 +46,11 @@ class PenjualanController extends Controller
 
                 $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
-                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                if ($penjualan->user_id != null) {
+                    $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                } else {
+                    $row[] = '<p class="text-center"><br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                }
 
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
@@ -64,20 +68,8 @@ class PenjualanController extends Controller
                     $row[] = '<p class="text-center">' . $this->checkStatusKurir($penjualan->status_kurir, 'admin/penjualan/update/kurir/' . $penjualan->id) . ' | ' . '<span class="badge bg-secondary">' . $penjualan->status_bayar . '</span></p>';
                 }
 
-
-
                 $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
 
-                // if (Auth::user()->level == 'owner') {
-                //     $row[] = '<p class="text-center">
-                //         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
-                //             <i class="fa-solid fa-eye"></i>
-                //         </a>
-                //         <a href="' . url('admin/penjualan/detail/' . $penjualan->id) . '" class="btn btn-sm btn-warning">
-                //             <i class="fa-solid fa-edit"></i>
-                //         </a>
-                //     </p>';
-                // }
                 if (Auth::user()->level == 'owner') {
                     $row[] = '<p class="text-center">
                         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
@@ -127,7 +119,11 @@ class PenjualanController extends Controller
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
 
-            $row[] = '<p class="text-start"><h6 class"fw-semibold">' . $penjualan->user->name . '</h6><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+            if ($penjualan->user_id != null) {
+                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+            } else {
+                $row[] = '<p class="text-center"><br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+            }
 
             $row[] = '<p class="text-start">
                 Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
