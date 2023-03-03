@@ -54,10 +54,10 @@ class SubmitForm extends Component
         if ($request->type == 'edit') $this->no_invoice = $penjualan->no_invoice;
     }
 
-    public function rules()
+    protected function rules()
     {
         if ($this->type_rules == 'create') {
-            $rules =  [
+            return [
                 'no_pesanan'     => 'required|unique:penjualans,no_pesanan,' . $this->no_pesanan,
                 'kurir'          => 'required',
                 'no_resi'        => 'required|unique:penjualans,no_resi,' . $this->no_resi,
@@ -67,7 +67,7 @@ class SubmitForm extends Component
         }
 
         if ($this->type_rules == 'edit') {
-            $rules =  [
+            return [
                 'no_pesanan'     => 'required',
                 'kurir'          => 'required',
                 'no_resi'        => 'required',
@@ -75,8 +75,6 @@ class SubmitForm extends Component
                 'fee'            => 'required|numeric',
             ];
         }
-
-        return $rules;
     }
 
     public function render()
@@ -112,7 +110,6 @@ class SubmitForm extends Component
         $penjualan->update([
             'no_pesanan'     => $this->no_pesanan,
             'no_invoice'     => $this->no_invoice,
-            'user_id'        => Auth::id(),
             'kurir'          => $this->kurir,
             'no_resi'        => $this->no_resi,
             'marketplace_id' => $this->marketplace_id,

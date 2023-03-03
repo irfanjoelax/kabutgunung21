@@ -153,7 +153,11 @@ class PenjualanController extends Controller
     public function create()
     {
         $id = Str::uuid();
-        Penjualan::create(['id' => $id]);
+
+        Penjualan::create([
+            'id'      => $id,
+            'user_id' => Auth::id(),
+        ]);
 
         // return redirect('admin/penjualan/detail/' . $id);
         return redirect()->route('penjualan.detail', [
