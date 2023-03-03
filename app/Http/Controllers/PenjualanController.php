@@ -46,7 +46,7 @@ class PenjualanController extends Controller
 
                 $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
-                $row[] = '<p class="text-center">' . $penjualan->user?->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
 
                 $row[] = '<p class="text-start">
                     Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
@@ -127,7 +127,7 @@ class PenjualanController extends Controller
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
 
-            $row[] = '<p class="text-start"><h6 class"fw-semibold">' . $penjualan->user?->name . '</h6><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+            $row[] = '<p class="text-start"><h6 class"fw-semibold">' . $penjualan->user->name . '</h6><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
 
             $row[] = '<p class="text-start">
                 Rp. <span class="float-end">' . number_format($penjualan->total) . '</span>
