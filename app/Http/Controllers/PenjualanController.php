@@ -47,9 +47,9 @@ class PenjualanController extends Controller
                 $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
                 if ($penjualan->user_id != null) {
-                    $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                    $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
                 } else {
-                    $row[] = '<p class="text-center"><br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                    $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
                 }
 
                 $row[] = '<p class="text-start">
@@ -120,9 +120,9 @@ class PenjualanController extends Controller
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
 
             if ($penjualan->user_id != null) {
-                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
             } else {
-                $row[] = '<p class="text-center"><br><small>' . substr($penjualan->updated_at, 0, 10) . '</small></p>';
+                $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
             }
 
             $row[] = '<p class="text-start">
