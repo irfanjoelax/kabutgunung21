@@ -155,8 +155,9 @@ class PenjualanController extends Controller
         $id = Str::uuid();
 
         Penjualan::create([
-            'id'      => $id,
-            'user_id' => Auth::id(),
+            'id'         => $id,
+            'user_id'    => Auth::id(),
+            'no_invoice' => $this->noInvoice(),
         ]);
 
         // return redirect('admin/penjualan/detail/' . $id);
@@ -201,5 +202,18 @@ class PenjualanController extends Controller
         ]);
 
         return redirect('/admin/penjualan');
+    }
+
+    public function noInvoice()
+    {
+        $urutan = Penjualan::whereYear('created_at', date('Y'))->count();
+        // $urutan = Penjualan::count();
+
+        $urutan++;
+
+        $huruf = "INV";
+        $kodeBarang = $huruf . sprintf("%06s", $urutan);
+
+        return $kodeBarang;
     }
 }

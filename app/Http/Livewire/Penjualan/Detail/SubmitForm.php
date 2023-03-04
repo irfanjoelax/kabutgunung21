@@ -48,26 +48,21 @@ class SubmitForm extends Component
         $this->remark         = $penjualan->remark;
         $this->grand_total    = $this->total - $this->fee;
         $this->no_pesanan     = $penjualan->no_pesanan;
-        $this->type_rules     = $request->type;
+        $this->no_invoice     = $penjualan->no_invoice;
+        // $this->type_rules     = $request->type;
 
-        if ($request->type == 'create') $this->no_invoice = $this->noInvoice();
-        if ($request->type == 'edit') $this->no_invoice = $penjualan->no_invoice;
-    }
-
-    protected function rules()
-    {
-        if ($this->type_rules == 'create') {
-            return [
-                'no_pesanan'     => 'required|unique:penjualans,no_pesanan,' . $this->no_pesanan,
+        if ($request->type == 'create') {
+            $this->type_rules = [
+                'no_pesanan'     => 'required|unique:penjualans,no_pesanan',
                 'kurir'          => 'required',
-                'no_resi'        => 'required|unique:penjualans,no_resi,' . $this->no_resi,
+                'no_resi'        => 'required|unique:penjualans,no_resi',
                 'marketplace_id' => 'required',
                 'fee'            => 'required|numeric',
             ];
         }
 
-        if ($this->type_rules == 'edit') {
-            return [
+        if ($request->type == 'edit') {
+            $this->type_rules = [
                 'no_pesanan'     => 'required',
                 'kurir'          => 'required',
                 'no_resi'        => 'required',
@@ -75,6 +70,11 @@ class SubmitForm extends Component
                 'fee'            => 'required|numeric',
             ];
         }
+    }
+
+    public function rules()
+    {
+        return $this->type_rules;
     }
 
     public function render()
@@ -109,7 +109,6 @@ class SubmitForm extends Component
 
         $penjualan->update([
             'no_pesanan'     => $this->no_pesanan,
-            'no_invoice'     => $this->no_invoice,
             'kurir'          => $this->kurir,
             'no_resi'        => $this->no_resi,
             'marketplace_id' => $this->marketplace_id,
@@ -123,18 +122,6 @@ class SubmitForm extends Component
         ]);
 
         return redirect()->to('/admin/penjualan');
-    }
-
-    public function noInvoice()
-    {
-        $kodeBarang = Penjualan::whereYear('created_at', date('Y'))->count();
-
-        $kodeBarang++;
-
-        $huruf = "INV";
-        $kodeBarang = $huruf . sprintf("%06s", $kodeBarang);
-
-        return $kodeBarang;
     }
 
     public function reloadTotal()
