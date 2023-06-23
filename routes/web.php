@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PembelianController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -85,6 +86,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
         Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
         Route::get('/admin/produk/history/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
+        Route::get('/admin/produk/show/{sku}', [App\Http\Controllers\ProdukController::class, 'show']);
+
+        // MASTER DATA PEMBELIAN
+        Route::resource('admin/pembelian', App\Http\Controllers\PembelianController::class)
+            ->only('index', 'store');
 
         // MASTER DATA LAPORAN
         Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);

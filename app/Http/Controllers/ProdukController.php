@@ -138,4 +138,20 @@ class ProdukController extends Controller
 
         return redirect('admin/produk');
     }
+
+    public function show($sku)
+    {
+        $produk = Produk::where('sku', $sku)->firstOrFail();
+
+        // Jika produk ditemukan, kembalikan data stok
+        if ($produk) {
+            return response()->json([
+                'nama' => $produk->nama,
+                'stok' => $produk->stok,
+            ]);
+        }
+
+        // Jika produk tidak ditemukan, kembalikan respon kosong atau pesan error
+        return response()->json([], 404);
+    }
 }

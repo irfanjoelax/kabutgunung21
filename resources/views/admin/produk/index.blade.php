@@ -14,8 +14,8 @@
                         <span class="ms-1">Tambah</span>
                     </a>
                 @endif
-                <div class="bg-white p-3 rounded shadow-sm table-responsive">
-                    <table class="table table-bordered datatable align-middle">
+                <div class="table-responsive rounded bg-white p-3 shadow-sm">
+                    <table class="table-bordered datatable table align-middle">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th width="7%" class="text-center">No.</th>

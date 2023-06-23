@@ -26,20 +26,20 @@
 
 <body>
     <!-- header -->
-    <header class="py-md-2 py-1 bg-white">
+    <header class="py-md-2 bg-white py-1">
         <div class="container-fluid d-flex align-items-center justify-content-between">
-            <div class="d-flex gap-md-3 gap-2 align-items-center">
+            <div class="d-flex gap-md-3 align-items-center gap-2">
                 <img src="{{ asset(env('APP_LOGO')) }}" class="" width="50">
-                <h1 class="m-0 fw-bold text-primary">
+                <h1 class="fw-bold text-primary m-0">
                     {{ env('APP_NAME') }}
                 </h1>
             </div>
-            <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">version. 2</span></h5>
+            <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">version. 2.1</span></h5>
         </div>
     </header>
 
     {{-- Navigasi --}}
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm pt-3">
+    <nav class="navbar navbar-expand-md navbar-light bg-white pt-3 shadow-sm">
         <div class="container-fluid">
             <button class="navbar-toggler w-100" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -47,7 +47,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     @php
@@ -103,6 +103,15 @@
                             <span class="ms-1">Penjualan</span>
                         </a>
                     </li>
+                    @if (Auth::user()->level == 'owner')
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'pembelian' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/pembelian') }}">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                                <span class="ms-1">Pembelian</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
                             href="{{ url('admin/pengeluaran') }}">
@@ -175,7 +184,7 @@
     </main>
 
     <footer class="">
-        <p class="mt-5 mb-3 text-muted text-center">
+        <p class="text-muted mt-5 mb-3 text-center">
             Powered by <strong class="text-primary">{{ env('APP_COPYRIGHT') }}</strong> &copy; {{ date('Y') }}
         </p>
     </footer>
