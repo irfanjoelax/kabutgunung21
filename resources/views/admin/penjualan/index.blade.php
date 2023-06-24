@@ -43,8 +43,8 @@
                         </div>
                     </form>
                 </div>
-                <div class="bg-white p-3 rounded-4 shadow-sm table-responsive">
-                    <table class="table table-bordered datatable align-middle" width="100%">
+                <div class="rounded-4 table-responsive bg-white p-3 shadow-sm">
+                    <table class="table-bordered datatable table align-middle" width="100%">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th width="16%" class="text-center">No. Pesanan/Invoice</th>

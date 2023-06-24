@@ -34,7 +34,14 @@
                     {{ env('APP_NAME') }}
                 </h1>
             </div>
-            <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">version. 2.1</span></h5>
+            <div class="d-flex gap-md-3 align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#notifikasiModal">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 2.1</span></h5>
+            </div>
+
         </div>
     </header>
 
@@ -188,6 +195,9 @@
             Powered by <strong class="text-primary">{{ env('APP_COPYRIGHT') }}</strong> &copy; {{ date('Y') }}
         </p>
     </footer>
+
+    {{-- Modal Notifikasi --}}
+    <x-modal-less-stock />
 
     @include('sweetalert::alert')
     @yield('script')
