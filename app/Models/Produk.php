@@ -39,4 +39,9 @@ class Produk extends Model
     {
         return $this->hasMany(PenjualanDetail::class);
     }
+
+    public function notifikasis()
+    {
+        return $this->hasMany(Notifikasi::class);
+    }
 }

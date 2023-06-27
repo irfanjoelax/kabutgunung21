@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Penjualan\Detail;
 
+use App\Models\Notifikasi;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
 use Livewire\Component;
@@ -71,6 +72,19 @@ class AddForm extends Component
                     ]);
 
                     $produk->decrement('stok', $this->qty);
+
+                    if ($produk->stok <= 3) {
+                        Notifikasi::updateOrCreate(
+                            [
+                                'tanggal' => date('Y-m-d'),
+                                'produk_id' => $produk->id,
+                            ],
+                            [
+                                'tanggal' => date('Y-m-d'),
+                                'produk_id' => $produk->id,
+                            ]
+                        );
+                    }
 
                     $this->emit('reloadList');
                     $this->emit('reloadSubmit');
