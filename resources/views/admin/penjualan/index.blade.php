@@ -47,12 +47,14 @@
                     <table class="table-bordered datatable table align-middle" width="100%">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th width="16%" class="text-center">No. Pesanan/Invoice</th>
+                                <th width="22%" class="text-center">No. Pesanan/Invoice</th>
                                 <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
                                 <th width="13%" class="text-start">Grand Total</th>
-                                <th width="21%" class="text-center">Status</th>
-                                <th width="20%" class="text-start">Remark</th>
+                                {{-- <th width="20%" class="text-center">Status</th> --}}
+                                <th width="7%" class="text-center">Status Kirim</th>
+                                <th width="7%" class="text-center">Status Bayar</th>
+                                <th width="21%" class="text-start">Remark</th>
                                 <th width="7%" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -95,6 +97,34 @@
 
                 datatable.ajax.url(urlFilter).load()
             })
+
+            $('.datatable').on('change', '.status-kurir', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
+
+                // Kirim permintaan AJAX ke endpoint Laravel untuk mengubah status tugas
+                $.ajax({
+                    url: '/admin/penjualan/update/kurir/' + penjualanId,
+                    type: 'GET',
+                    data: {
+                        status: status
+                    }
+                });
+            });
+
+            $('.datatable').on('change', '.status-bayar', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+
+                // Kirim permintaan AJAX ke endpoint Laravel untuk mengubah status tugas
+                $.ajax({
+                    url: '/admin/penjualan/update/bayar/' + penjualanId,
+                    type: 'GET',
+                    data: {
+                        status: status
+                    }
+                });
+            });
         });
     </script>
 @endsection

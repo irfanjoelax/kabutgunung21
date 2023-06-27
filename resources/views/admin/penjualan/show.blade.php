@@ -14,12 +14,12 @@
                         <span class="ms-1">Cetak</span>
                     </button>
                 </div>
-                <div class="card border-0 shadow p-3" id="print-area">
+                <div class="card border-0 p-3 shadow" id="print-area">
                     {{-- HEADER --}}
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="text-start">
                             <img src="{{ asset(env('APP_LOGO')) }}" class="" width="50">
-                            <h3 class="mt-2 fw-bolder text-primary">
+                            <h3 class="fw-bolder text-primary mt-2">
                                 {{ env('APP_NAME') }}
                             </h3>
                         </div>
@@ -36,7 +36,7 @@
 
                     {{-- INFORMATION CUSTOMER DAN KURIR --}}
                     <div class="table-responsive mt-4">
-                        <table class="table table-sm table-borderless" width="100%">
+                        <table class="table-sm table-borderless table" width="100%">
                             <tr>
                                 <td width="19%"><strong>Marketplace</strong></td>
                                 <td width="1%">:</td>
@@ -63,7 +63,7 @@
 
                     {{-- INFORMATION DETAIL PENJUALAN --}}
                     <div class="table-responsive mt-2">
-                        <table class="table table-bordered table-striped">
+                        <table class="table-bordered table-striped table">
                             <thead class="bg-primary text-white">
                                 <th width="45%" class="text-start">Nama Produk</th>
                                 <th width="22%" class="text-start">Hrg Jual</th>
@@ -91,13 +91,13 @@
                     <div class="row mt-4">
                         <div class="col-5 mb-2">
                             <div class="card border-secondary">
-                                <small class="mx-2 text-muted">Remark:</small>
+                                <small class="text-muted mx-2">Remark:</small>
                                 <p class="mx-2 mt-2">{{ $data->remark }}</p>
                             </div>
                         </div>
                         <div class="col-2"></div>
                         <div class="col-5 mb-2">
-                            <table class="table table-sm table-striped" width="100%">
+                            <table class="table-sm table-striped table" width="100%">
                                 <tr>
                                     <td width="29%"><strong>Total</strong></td>
                                     <td width="1%">:</td>
