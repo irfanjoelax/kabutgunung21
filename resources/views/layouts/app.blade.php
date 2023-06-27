@@ -35,10 +35,12 @@
                 </h1>
             </div>
             <div class="d-flex gap-md-3 align-items-center gap-2">
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#notifikasiModal">
-                    <i class="fa-solid fa-bell"></i>
-                </button>
+                @if (Auth::user()->level == 'owner')
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#notifikasiModal">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                @endif
                 <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 2.1</span></h5>
             </div>
 
