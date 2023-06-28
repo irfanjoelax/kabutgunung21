@@ -20,18 +20,20 @@
                         <textarea class="form-control" name="nama" id="nama" rows="3" readonly></textarea>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-8">
                             <div class="mb-3">
-                                <label for="stok" class="form-label">Stok</label>
-                                <input type="number" class="form-control" name="stok" id="stok" placeholder="0"
-                                    readonly>
+                                <label for="harga_beli" class="form-label">Harga Modal/Beli</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" name="harga_beli" id="harga_beli"
+                                        placeholder="0">
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-4">
                             <div class="mb-3">
-                                <label for="update_stok" class="form-label">Jumlah Update Stok</label>
-                                <input type="number" class="form-control" name="update_stok" id="update_stok"
-                                    placeholder="0">
+                                <label for="stok" class="form-label">Stok</label>
+                                <input type="number" class="form-control" name="stok" id="stok" placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -83,6 +85,7 @@
 
                 $.get('/admin/produk/show/' + sku, function(response) {
                     $('#nama').val(response.nama);
+                    $('#harga_beli').val(response.harga_beli);
                     $('#stok').val(response.stok);
                 });
             });

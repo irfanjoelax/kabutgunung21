@@ -66,6 +66,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/dashboard-admin', [App\Http\Controllers\Admin\DashboardController::class, 'admin']);
     });
 
+    Route::middleware(['checkuser:manager'])->group(function () {
+        // DASHBOARD ADMIN
+        Route::get('/admin/dashboard-manager', [App\Http\Controllers\Admin\DashboardController::class, 'manager']);
+    });
+
 
     /**
      * KHUSUS LEVEL OWNER

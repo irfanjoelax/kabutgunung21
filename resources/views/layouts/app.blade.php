@@ -66,6 +66,9 @@
                         if (Auth::user()->level == 'owner') {
                             $dashboard = 'owner';
                         }
+                        if (Auth::user()->level == 'manager') {
+                            $dashboard = 'manager';
+                        }
                     @endphp
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'dashboard' ? 'bg-warning text-white rounded' : '' }}"

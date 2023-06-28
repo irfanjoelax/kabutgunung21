@@ -29,7 +29,7 @@
                         }
                     }
                 @endphp
-                <form action="{{ $url }}" class="bg-white p-4 shadow-sm rounded-4" method="POST">
+                <form action="{{ $url }}" class="rounded-4 bg-white p-4 shadow-sm" method="POST">
                     @csrf
                     <div class="row mb-4">
                         <label for="name" class="col-sm-3 col-form-label">Full Name</label>
@@ -57,6 +57,11 @@
                                 <input class="form-check-input" type="radio" name="level" id="owner" value="owner"
                                     required {{ $isEdit ? is_checked('owner', $data->level) : '' }}>
                                 <label class="form-check-label" for="owner">Owner</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="level" id="manager" value="manager"
+                                    required {{ $isEdit ? is_checked('manager', $data->level) : '' }}>
+                                <label class="form-check-label" for="manager">Manager</label>
                             </div>
                         </div>
                     </div>

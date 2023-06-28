@@ -51,7 +51,6 @@
                                 <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
                                 <th width="13%" class="text-start">Grand Total</th>
-                                {{-- <th width="20%" class="text-center">Status</th> --}}
                                 <th width="7%" class="text-center">Status Kirim</th>
                                 <th width="7%" class="text-center">Status Bayar</th>
                                 <th width="21%" class="text-start">Remark</th>

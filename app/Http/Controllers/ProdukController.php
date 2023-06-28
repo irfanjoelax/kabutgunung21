@@ -146,8 +146,9 @@ class ProdukController extends Controller
         // Jika produk ditemukan, kembalikan data stok
         if ($produk) {
             return response()->json([
-                'nama' => $produk->nama,
-                'stok' => $produk->stok,
+                'nama'       => $produk->nama,
+                'harga_beli' => $produk->harga_beli,
+                'stok'       => $produk->stok,
             ]);
         }
 

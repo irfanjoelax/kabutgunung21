@@ -17,6 +17,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function manager()
+    {
+        return view('admin.dashboard-manager', [
+            'activeMenu' => 'dashboard',
+        ]);
+    }
+
     public function owner()
     {
         $awal  = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
