@@ -35,9 +35,11 @@ class PenjualanController extends Controller
         $akhir = date('Y-m-d');
 
         if ($request->ajax()) {
-            $penjualans = Penjualan::with('user')->where('created_at', '>=', $awal . " 00:00:00")
+            $penjualans = Penjualan::with('user')
+                ->where('created_at', '>=', $awal . " 00:00:00")
                 ->where('created_at', '<=', $akhir . " 23:59:59")
-                ->latest()->get();
+                ->latest()
+                ->get();
 
             $data = [];
 
@@ -87,7 +89,7 @@ class PenjualanController extends Controller
                         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
                             <i class="fa-solid fa-eye"></i>
                         </a>
-                        <a href="' . route('penjualan.detail', ['id' => $penjualan->id, 'type' => 'edit']) . '" class="btn btn-sm btn-warning">
+                        <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
                             <i class="fa-solid fa-edit"></i>
                         </a>
                     </p>';
@@ -107,10 +109,16 @@ class PenjualanController extends Controller
             return response()->json(["data" => $data]);
         }
 
+        // $whereArr = [
+        //     ['created_at', '>=', $awal . " 00:00:00"],
+        //     ['created_at', '<=', $akhir . " 23:59:59"],
+        // ];
+
         return view('admin.penjualan.index', [
             'activeMenu' => 'penjualan',
             'awal' => $awal,
             'akhir' => $akhir,
+            'penjualans' => Penjualan::latest()->get()
         ]);
     }
 
@@ -122,11 +130,15 @@ class PenjualanController extends Controller
             ['status_bayar', '=', $status],
         ];
 
-        $penjualans = Penjualan::with('user')->where($whereArr)->latest()->get();
+        $penjualans = Penjualan::with('user')->where($whereArr);
+
+        if (request('no_pesanan') != null) {
+            $penjualans->whereIn('no_pesanan', explode(",", request('no_pesanan')));
+        }
 
         $data       = [];
 
-        foreach ($penjualans as $penjualan) {
+        foreach ($penjualans->latest()->get() as $penjualan) {
             $row = [];
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
@@ -157,12 +169,13 @@ class PenjualanController extends Controller
 
                 $row[] = '<p class="text-center"><span class="badge bg-secondary">' . $penjualan->status_bayar . '</span></p>';
             }
+
             $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
             $row[] = '<p class="text-center">
                     <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
                         <i class="fa-solid fa-eye"></i>
                     </a>
-                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id) . '" class="btn btn-sm btn-warning">
+                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
                         <i class="fa-solid fa-edit"></i>
                     </a>
                 </p>';

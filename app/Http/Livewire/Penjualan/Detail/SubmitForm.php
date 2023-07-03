@@ -51,7 +51,7 @@ class SubmitForm extends Component
         $this->no_invoice     = $penjualan->no_invoice;
         // $this->type_rules     = $request->type;
 
-        if ($request->type == 'create') {
+        if ($request->type === 'create') {
             $this->type_rules = [
                 'no_pesanan'     => 'required|unique:penjualans,no_pesanan',
                 'kurir'          => 'required',
@@ -61,7 +61,7 @@ class SubmitForm extends Component
             ];
         }
 
-        if ($request->type == 'edit') {
+        if ($request->type === 'edit') {
             $this->type_rules = [
                 'no_pesanan'     => 'required',
                 'kurir'          => 'required',

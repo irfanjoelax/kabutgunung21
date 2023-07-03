@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <p class="mb-2 text-start display-6 fw-semibold">
+        <p class="display-6 fw-semibold mb-2 text-start">
             Rp. <span class="float-end">{{ number_format($grand_total) }}</span>
         </p>
         <hr>
