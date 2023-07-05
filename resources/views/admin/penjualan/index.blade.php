@@ -26,12 +26,13 @@
                     <div class="col-12 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">No. Pesanan Marketplace</div>
-                            <select class="js-example-basic-multiple" name="no_pesanan[]" id="no_pesanan"
+                            {{-- <select class="js-example-basic-multiple" name="no_pesanan[]" id="no_pesanan"
                                 multiple="multiple">
                                 @foreach ($penjualans as $penjualan)
                                     <option value="{{ $penjualan->no_pesanan }}">{{ $penjualan->no_pesanan }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <textarea name="no_pesanan" id="no_pesanan" rows="1" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="col-3 mb-3">
@@ -118,10 +119,14 @@
                 const awal = document.getElementById('awal').value;
                 const akhir = document.getElementById('akhir').value;
                 const status = document.getElementById('status').value;
-                const noPesanan = $('select[name="no_pesanan[]"]').val();
+                // const noPesanan = $('select[name="no_pesanan[]"]').val();
+                const noPesanan = document.getElementById('no_pesanan').value;
 
                 const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
-                    "?no_pesanan=" + noPesanan.join(',');
+                    "?no_pesanan=" + noPesanan;
+
+                // const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
+                //     "?no_pesanan=" + noPesanan.join(',');
 
                 datatable.ajax.url(urlFilter).load()
             })
