@@ -20,6 +20,21 @@
                         <textarea class="form-control" name="nama" id="nama" rows="3" readonly></textarea>
                     </div>
                     <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="stok" class="form-label">Stok</label>
+                                <input type="number" class="form-control" name="stok" id="stok" placeholder="0"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="stok" class="form-label">Re-Stok</label>
+                                <input type="number" class="form-control" name="restok" id="restok" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-8">
                             <div class="mb-3">
                                 <label for="harga_beli" class="form-label">Harga Modal/Beli</label>
@@ -28,12 +43,6 @@
                                     <input type="number" class="form-control" name="harga_beli" id="harga_beli"
                                         placeholder="0">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="mb-3">
-                                <label for="stok" class="form-label">Stok</label>
-                                <input type="number" class="form-control" name="stok" id="stok" placeholder="0">
                             </div>
                         </div>
                     </div>

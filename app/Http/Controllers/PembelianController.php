@@ -73,12 +73,14 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        Produk::where('sku', $request->sku)->firstOrFail()->update([
+        $produk = Produk::where('sku', $request->sku)->firstOrFail();
+
+        $produk->update([
             'harga_beli' => $request->harga_beli,
-            'stok' => $request->stok,
+            'stok'       => $produk->stok + $request->restok,
         ]);
 
-        Alert::info('Sukses', 'Stok Produk Telah Berhasil Diperbarui');
+        Alert::info('Sukses', 'Update Produk Telah Berhasil Diperbarui');
 
         return redirect('admin/pembelian');
     }
