@@ -69,7 +69,7 @@ class PenjualanController extends Controller
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
                 }
 
-                if (Auth::user()->level == 'manager') {
+                if (Auth::user()->level == 'keuangan') {
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
                 }
@@ -84,7 +84,7 @@ class PenjualanController extends Controller
 
                 $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
 
-                if (in_array(Auth::user()->level, ['owner', 'manager'])) {
+                if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
                     $row[] = '<p class="text-center">
                         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
                             <i class="fa-solid fa-eye"></i>

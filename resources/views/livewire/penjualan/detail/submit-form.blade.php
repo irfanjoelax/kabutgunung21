@@ -70,7 +70,7 @@
                             <i class="fa fa-check"></i> Simpan
                         </div>
                     </button>
-                    @if (Auth::user()->level == 'owner')
+                    @if (in_array(Auth::user()->level, ['keuangan', 'owner']))
                         <button type="button"
                             onclick="return confirm(`Apakah yakin ingin membatalkan dan menghapus penjualan ini?`) || event.stopImmediatePropagation()"
                             wire:click="cancel" class="btn btn-warning w-100">

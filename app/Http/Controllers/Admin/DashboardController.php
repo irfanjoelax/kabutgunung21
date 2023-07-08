@@ -17,9 +17,9 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function manager()
+    public function keuangan()
     {
-        return view('admin.dashboard-manager', [
+        return view('admin.dashboard-keuangan', [
             'activeMenu' => 'dashboard',
         ]);
     }

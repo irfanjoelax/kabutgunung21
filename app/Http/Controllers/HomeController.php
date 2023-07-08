@@ -28,8 +28,8 @@ class HomeController extends Controller
             return redirect('admin/dashboard-admin');
         }
 
-        if (Auth::user()->level === 'manager') {
-            return redirect('admin/dashboard-manager');
+        if (Auth::user()->level === 'keuangan') {
+            return redirect('admin/dashboard-keuangan');
         }
 
         if (Auth::user()->level === 'owner') {

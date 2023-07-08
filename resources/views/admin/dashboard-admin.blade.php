@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         <div class="row mb-2">
-            <div class="col-md-7 col-12 mb-3 align-self-center">
+            <div class="col-md-7 col-12 align-self-center mb-3">
                 <h1 class="display-2 fw-bold mb-1">
-                    Welcome!
+                    Hi, Admin!
                 </h1>
                 <p class="text-muted mb-4">
                     Sistem Informasi Penjualans {{ env('APP_NAME') }} untuk memantau semua transaksi yang dilakukan mulai

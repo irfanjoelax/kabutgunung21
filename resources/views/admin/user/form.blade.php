@@ -59,9 +59,9 @@
                                 <label class="form-check-label" for="owner">Owner</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="level" id="manager" value="manager"
-                                    required {{ $isEdit ? is_checked('manager', $data->level) : '' }}>
-                                <label class="form-check-label" for="manager">Manager</label>
+                                <input class="form-check-input" type="radio" name="level" id="keuangan"
+                                    value="keuangan" required {{ $isEdit ? is_checked('keuangan', $data->level) : '' }}>
+                                <label class="form-check-label" for="keuangan">Keuangan</label>
                             </div>
                         </div>
                     </div>

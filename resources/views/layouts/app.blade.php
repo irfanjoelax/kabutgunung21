@@ -35,13 +35,11 @@
                 </h1>
             </div>
             <div class="d-flex gap-md-3 align-items-center gap-2">
-                @if (Auth::user()->level == 'owner')
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#notifikasiModal">
-                        <i class="fa-solid fa-bell"></i>
-                    </button>
-                @endif
-                <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 2.1</span></h5>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#notifikasiModal">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 2.3</span></h5>
             </div>
 
         </div>
@@ -66,8 +64,8 @@
                         if (Auth::user()->level == 'owner') {
                             $dashboard = 'owner';
                         }
-                        if (Auth::user()->level == 'manager') {
-                            $dashboard = 'manager';
+                        if (Auth::user()->level == 'keuangan') {
+                            $dashboard = 'keuangan';
                         }
                     @endphp
                     <li class="nav-item me-2">
@@ -124,13 +122,15 @@
                             </a>
                         </li>
                     @endif
-                    <li class="nav-item me-2">
-                        <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/pengeluaran') }}">
-                            <i class="fa-solid fa-credit-card"></i>
-                            <span class="ms-1">Pengeluaran</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->level == 'owner')
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/pengeluaran') }}">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span class="ms-1">Pengeluaran</span>
+                            </a>
+                        </li>
+                    @endif
                     @if (Auth::user()->level == 'owner')
                         <li class="nav-item me-2">
                             <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
