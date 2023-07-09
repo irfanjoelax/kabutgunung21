@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -95,6 +96,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
+        Schema::disableForeignKeyConstraints();
+
         User::find($id)->delete();
         Alert::error('Sukses', 'Data User Telah Berhasil Dihapus');
 

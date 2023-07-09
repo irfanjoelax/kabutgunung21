@@ -11,24 +11,6 @@ use Illuminate\Support\Str;
 
 class PenjualanController extends Controller
 {
-    private function checkStatusKurir($value, $url)
-    {
-        if ($value == 'BELUM TERKIRIM') {
-            return '<a onclick="return confirm(`Apakah benar penjualan ini telah dikirimkan ke jasa kurir?`)" href="' . url($url) . '" class="badge bg-warning text-decoration-none">' . $value . '</a>';
-        } else {
-            return '<span class="badge bg-success">' . $value . '</span>';
-        }
-    }
-
-    private function checkStatusBayar($value, $url)
-    {
-        if ($value == 'BELUM TERBAYAR') {
-            return '<a onclick="return confirm(`Apakah benar penjualan ini telah dibayarkan oleh Marketplace?`)" href="' . url($url) . '" class="badge bg-danger text-decoration-none">' . $value . '</a>';
-        } else {
-            return '<span class="badge bg-info">' . $value . '</span>';
-        }
-    }
-
     public function index(Request $request)
     {
         $awal  = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
@@ -48,10 +30,14 @@ class PenjualanController extends Controller
 
                 $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
-                if ($penjualan->user_id != null) {
-                    $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                if ($penjualan->user()->exists()) {
+                    if ($penjualan->user_id != null) {
+                        $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                    } else {
+                        $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                    }
                 } else {
-                    $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                    $row[] = '<p class="text-center"><span class="text-danger">User dihapus</span><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
                 }
 
                 $row[] = '<p class="text-start">
@@ -138,10 +124,14 @@ class PenjualanController extends Controller
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
 
-            if ($penjualan->user_id != null) {
-                $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+            if ($penjualan->user()->exists()) {
+                if ($penjualan->user_id != null) {
+                    $row[] = '<p class="text-center">' . $penjualan->user->name . '<br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                } else {
+                    $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                }
             } else {
-                $row[] = '<p class="text-center"><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
+                $row[] = '<p class="text-center"><span class="text-danger">User dihapus</span><br><small style="font-size: 10px">' . $penjualan->updated_at . '</small></p>';
             }
 
             $row[] = '<p class="text-start">
