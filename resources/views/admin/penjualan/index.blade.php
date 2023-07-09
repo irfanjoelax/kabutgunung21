@@ -12,26 +12,9 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="row" id="form-filter">
-                    {{-- <div class="col-12">
-                            <div class="input-group">
-                                <div class="input-group-text">No. Invoice</div>
-                                <select class="form-select" multiple name="no_invoice">
-                                    <option value="" selected>Cari No. Invoice</option>
-                                    @foreach ($penjualans as $penjualan)
-                                        <option value="{{ $penjualan->id }}">{{ $penjualan->no_invoice }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
                     <div class="col-12 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">No. Pesanan Marketplace</div>
-                            {{-- <select class="js-example-basic-multiple" name="no_pesanan[]" id="no_pesanan"
-                                multiple="multiple">
-                                @foreach ($penjualans as $penjualan)
-                                    <option value="{{ $penjualan->no_pesanan }}">{{ $penjualan->no_pesanan }}</option>
-                                @endforeach
-                            </select> --}}
                             <textarea name="no_pesanan" id="no_pesanan" rows="1" class="form-control"></textarea>
                         </div>
                     </div>
@@ -119,17 +102,34 @@
                 const awal = document.getElementById('awal').value;
                 const akhir = document.getElementById('akhir').value;
                 const status = document.getElementById('status').value;
-                // const noPesanan = $('select[name="no_pesanan[]"]').val();
                 const noPesanan = document.getElementById('no_pesanan').value;
 
                 const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
                     "?no_pesanan=" + noPesanan;
 
-                // const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
-                //     "?no_pesanan=" + noPesanan.join(',');
-
                 datatable.ajax.url(urlFilter).load()
             })
+
+            $('.datatable').on('change', '.status-kirim', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
+
+                var checkbox = $(this);
+                var badge = $(
+                    `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
+
+                $.ajax({
+                    url: '/admin/penjualan/update/kurir/' + penjualanId,
+                    type: 'GET',
+                    data: {
+                        status: status
+                    },
+                    success: function() {
+                        checkbox.replaceWith(badge);
+                        console.log(badge)
+                    }
+                });
+            });
 
             $('.datatable').on('change', '.status-kurir', function() {
                 var penjualanId = $(this).data('penjualan-id');
