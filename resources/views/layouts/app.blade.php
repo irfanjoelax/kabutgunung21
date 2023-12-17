@@ -39,7 +39,7 @@
                     data-bs-target="#notifikasiModal">
                     <i class="fa-solid fa-bell"></i>
                 </button>
-                <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 2.3</span></h5>
+                <h5><span class="badge bg-light text-primary px-3 py-2 shadow-sm">Version. 4.1</span></h5>
             </div>
 
         </div>
@@ -58,15 +58,15 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     @php
-                        if (Auth::user()->level == 'admin') {
-                            $dashboard = 'admin';
-                        }
-                        if (Auth::user()->level == 'owner') {
-                            $dashboard = 'owner';
-                        }
-                        if (Auth::user()->level == 'keuangan') {
-                            $dashboard = 'keuangan';
-                        }
+                    if (Auth::user()->level == 'admin') {
+                    $dashboard = 'admin';
+                    }
+                    if (Auth::user()->level == 'owner') {
+                    $dashboard = 'owner';
+                    }
+                    if (Auth::user()->level == 'keuangan') {
+                    $dashboard = 'keuangan';
+                    }
                     @endphp
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'dashboard' ? 'bg-warning text-white rounded' : '' }}"
@@ -98,13 +98,13 @@
                         </a>
                     </li>
                     @if (Auth::user()->level == 'owner')
-                        <li class="nav-item me-2">
-                            <a class="nav-link {{ $activeMenu == 'user' ? 'bg-warning text-white rounded' : '' }}"
-                                href="{{ url('admin/user') }}">
-                                <i class="fa-solid fa-users"></i>
-                                <span class="ms-1">User</span>
-                            </a>
-                        </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'user' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/user') }}">
+                            <i class="fa-solid fa-users"></i>
+                            <span class="ms-1">User</span>
+                        </a>
+                    </li>
                     @endif
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'penjualan' ? 'bg-warning text-white rounded' : '' }}"
@@ -114,31 +114,38 @@
                         </a>
                     </li>
                     @if (Auth::user()->level == 'owner')
-                        <li class="nav-item me-2">
-                            <a class="nav-link {{ $activeMenu == 'pembelian' ? 'bg-warning text-white rounded' : '' }}"
-                                href="{{ url('admin/pembelian') }}">
-                                <i class="fa-solid fa-basket-shopping"></i>
-                                <span class="ms-1">Pembelian</span>
-                            </a>
-                        </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'pembelian' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/pembelian') }}">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                            <span class="ms-1">Pembelian</span>
+                        </a>
+                    </li>
                     @endif
                     @if (Auth::user()->level == 'owner')
-                        <li class="nav-item me-2">
-                            <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
-                                href="{{ url('admin/pengeluaran') }}">
-                                <i class="fa-solid fa-credit-card"></i>
-                                <span class="ms-1">Pengeluaran</span>
-                            </a>
-                        </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'pengeluaran' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/pengeluaran') }}">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <span class="ms-1">Pengeluaran</span>
+                        </a>
+                    </li>
                     @endif
                     @if (Auth::user()->level == 'owner')
-                        <li class="nav-item me-2">
-                            <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
-                                href="{{ url('admin/laporan') }}">
-                                <i class="fa-solid fa-file-lines"></i>
-                                <span class="ms-1">Laporan</span>
-                            </a>
-                        </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'laporan' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/laporan') }}">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span class="ms-1">Laporan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link {{ $activeMenu == 'histori' ? 'bg-warning text-white rounded' : '' }}"
+                            href="{{ url('admin/histori') }}?tanggal={{ date('Y-m-d') }}">
+                            <i class="fa-solid fa-user-clock"></i>
+                            <span class="ms-1">Histori</span>
+                        </a>
+                    </li>
                     @endif
                 </ul>
 
@@ -146,44 +153,43 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
+                    @if (Route::has('login'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                    @endif
 
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
+                    @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                    @endif
                     @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown"
-                                class="nav-link dropdown-toggle {{ $activeMenu == 'profile' ? 'bg-warning text-white rounded' : '' }}"
-                                href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" v-pre>
-                                <i class="fa-solid fa-circle-user"></i>
-                                <span class="ms-1">{{ Auth::user()->name }}</span>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown"
+                            class="nav-link dropdown-toggle {{ $activeMenu == 'profile' ? 'bg-warning text-white rounded' : '' }}"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            v-pre>
+                            <i class="fa-solid fa-circle-user"></i>
+                            <span class="ms-1">{{ Auth::user()->name }}</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url('admin/profile') }}">
+                                <i class="fa-solid fa-user-gear"></i>
+                                <span class="ms-1">Profile</span>
+                            </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span class="ms-1">{{ __('Logout') }}</span>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('admin/profile') }}">
-                                    <i class="fa-solid fa-user-gear"></i>
-                                    <span class="ms-1">Profile</span>
-                                </a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                    <span class="ms-1">{{ __('Logout') }}</span>
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
                     @endguest
                 </ul>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -11,7 +12,13 @@ class KategoriController extends Controller
 {
     public function index(Request $request)
     {
+
         if ($request->ajax()) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengakses Daftar Kategori.',
+            ]);
+
             $kategoris = Kategori::latest()->get();
             $data      = [];
             $no        = 1;
@@ -27,7 +34,7 @@ class KategoriController extends Controller
                     </a>
                     <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/kategori/delete/' . $kategori->id) . '" class="btn btn-sm btn-danger">
                         Hapus
-                    </a>    
+                    </a>
                 </p>';
 
                 $data[] = $row;
@@ -63,6 +70,7 @@ class KategoriController extends Controller
 
     public function submit(Request $request, $id = null)
     {
+
         $dataID = Str::uuid();
 
         if ($id != null) {
@@ -75,9 +83,17 @@ class KategoriController extends Controller
         ];
 
         if ($id == null) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Menambahkan Data Kategori.',
+            ]);
             Kategori::create($data);
             Alert::success('Sukses', 'Data Kategori Telah Berhasil Ditambahkan');
         } else {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengubah Data Kategori.',
+            ]);
             Kategori::find($id)->update($data);
             Alert::info('Sukses', 'Data Kategori Telah Berhasil Diperbarui');
         }
@@ -87,6 +103,10 @@ class KategoriController extends Controller
 
     public function delete($id)
     {
+        History::create([
+            'user_id' => auth()->user()->id,
+            'histori' => auth()->user()->name . ' Menghapus Data Kategori.',
+        ]);
         Kategori::find($id)->delete();
         Alert::error('Sukses', 'Data Kategori Telah Berhasil Dihapus');
 

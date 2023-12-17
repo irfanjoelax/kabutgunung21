@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Marketplace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -12,6 +13,11 @@ class MarketplaceController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengakses Daftar Marketplace.',
+            ]);
+
             $marketplaces = Marketplace::latest()->get();
             $data         = [];
             $no           = 1;
@@ -27,7 +33,7 @@ class MarketplaceController extends Controller
                     </a>
                     <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/marketplace/delete/' . $marketplace->id) . '" class="btn btn-sm btn-danger">
                         Hapus
-                    </a>    
+                    </a>
                 </p>';
 
                 $data[] = $row;
@@ -75,9 +81,17 @@ class MarketplaceController extends Controller
         ];
 
         if ($id == null) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Menambahkan Data Marketplace.',
+            ]);
             Marketplace::create($data);
             Alert::success('Sukses', 'Data Marketplace Telah Berhasil Ditambahkan');
         } else {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengubah Data Marketplace.',
+            ]);
             Marketplace::find($id)->update($data);
             Alert::info('Sukses', 'Data Marketplace Telah Berhasil Diperbarui');
         }
@@ -87,6 +101,10 @@ class MarketplaceController extends Controller
 
     public function delete($id)
     {
+        History::create([
+            'user_id' => auth()->user()->id,
+            'histori' => auth()->user()->name . ' Menghapus Data Marketplace.',
+        ]);
         Marketplace::find($id)->delete();
         Alert::error('Sukses', 'Data Marketplace Telah Berhasil Dihapus');
 

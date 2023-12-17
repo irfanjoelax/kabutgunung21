@@ -99,5 +99,9 @@ Route::middleware(['auth'])->group(function () {
 
         // MASTER DATA LAPORAN
         Route::get('/admin/laporan', [App\Http\Controllers\LaporanController::class, 'index']);
+
+        // MASTER DATA HISTORI
+        Route::resource('/admin/histori', App\Http\Controllers\HistoriController::class)
+            ->only('index');
     });
 });

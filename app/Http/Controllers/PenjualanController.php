@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
@@ -17,6 +18,10 @@ class PenjualanController extends Controller
         $akhir = date('Y-m-d');
 
         if ($request->ajax()) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengakses Daftar Penjualan.',
+            ]);
             $penjualans = Penjualan::with('user')
                 ->where('created_at', '>=', $awal . " 00:00:00")
                 ->where('created_at', '<=', $akhir . " 23:59:59")
@@ -193,6 +198,11 @@ class PenjualanController extends Controller
     {
         $id = Str::uuid();
 
+        History::create([
+            'user_id' => auth()->user()->id,
+            'histori' => auth()->user()->name . ' Menambahkan data penjualan.',
+        ]);
+
         Penjualan::create([
             'id'         => $id,
             'user_id'    => Auth::id(),
@@ -227,6 +237,11 @@ class PenjualanController extends Controller
 
     public function updateBayar($id)
     {
+        History::create([
+            'user_id' => auth()->user()->id,
+            'histori' => auth()->user()->name . ' Melakukan update pembayaran.',
+        ]);
+
         Penjualan::find($id)->update([
             'status_bayar' => request('status'),
         ]);
@@ -236,6 +251,11 @@ class PenjualanController extends Controller
 
     public function updateKurir($id)
     {
+        History::create([
+            'user_id' => auth()->user()->id,
+            'histori' => auth()->user()->name . ' Melakukan update kurir/pengiriman.',
+        ]);
+
         Penjualan::find($id)->update([
             'status_kurir' => request('status'),
         ]);

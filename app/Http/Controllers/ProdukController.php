@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -21,6 +22,10 @@ class ProdukController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            History::create([
+                'user_id' => auth()->user()->id,
+                'histori' => auth()->user()->name . ' Mengakses Daftar Produk.',
+            ]);
             $produks = Produk::with('kategori')->latest()->get();
             $data    = [];
             $no      = 1;
@@ -54,7 +59,7 @@ class ProdukController extends Controller
                         </a>
                         <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
                             Hapus
-                        </a>    
+                        </a>
                     </p>';
                 }
 
