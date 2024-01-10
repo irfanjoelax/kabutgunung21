@@ -18,21 +18,21 @@
                             <textarea name="no_pesanan" id="no_pesanan" rows="1" class="form-control"></textarea>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Awal</div>
                             <input type="date" class="form-control" name="awal" id="awal"
                                 value="{{ $_REQUEST['awal'] ?? $awal }}" required>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Akhir</div>
                             <input type="date" class="form-control" name="akhir" id="akhir"
                                 value="{{ $_REQUEST['akhir'] ?? $akhir }}" required>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Status</div>
                             <select name="status" id="status" class="form-select">
@@ -41,7 +41,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text">Marketplace</div>
+                            <select name="marketplace_id" id="marketplace_id" class="form-select">
+                                <option value="">Pilih Marketplace</option>
+                                @foreach ($marketplaces as $marketplace)
+                                    <option value="{{ $marketplace->id }}">{{ $marketplace->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
                         <button type="submit" class="btn btn-success">Filter</button>
                         <a href="{{ url('admin/penjualan') }}" class="btn btn-warning">Reset</a>
                     </div>
@@ -102,10 +113,11 @@
                 const awal = document.getElementById('awal').value;
                 const akhir = document.getElementById('akhir').value;
                 const status = document.getElementById('status').value;
+                const marketplace = document.getElementById('marketplace_id').value;
                 const noPesanan = document.getElementById('no_pesanan').value;
 
                 const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
-                    "?no_pesanan=" + noPesanan;
+                    "/" + marketplace + "?no_pesanan=" + noPesanan;
 
                 datatable.ajax.url(urlFilter).load()
             })

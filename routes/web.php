@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('penjualan.detail');
     Route::get('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
     Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
-    Route::get('/admin/penjualan/{awal}/{akhir}/{status}', [App\Http\Controllers\PenjualanController::class, 'filter']);
+    Route::get('/admin/penjualan/{awal}/{akhir}/{status}/{marketplace}', [App\Http\Controllers\PenjualanController::class, 'filter']);
 
     /**
      * KHUSUS LEVEL ADMIN/KARYAWAN
