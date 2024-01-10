@@ -108,7 +108,7 @@
                     "?no_pesanan=" + noPesanan;
 
                 datatable.ajax.url(urlFilter).load()
-            })
+            });
 
             $('.datatable').on('change', '.status-kirim', function() {
                 var penjualanId = $(this).data('penjualan-id');
