@@ -27,13 +27,25 @@ class UserController extends Controller
                 $row[] = '<p class="text-center">
                     <span class="badge bg-secondary">' . ucwords($user->level) . '</span>
                 </p>';
+
+
+                if ($user->status) {
+                    $row[] = '<p class="text-center text-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </p>';
+                } else {
+                    $row[] = '<p class="text-center text-danger">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </p>';
+                }
+
                 $row[] = '<p class="text-center">
                     <a href="' . url('admin/user/edit/' . $user->id) . '" class="btn btn-sm btn-success">
                         Ubah
                     </a>
                     <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/user/delete/' . $user->id) . '" class="btn btn-sm btn-danger">
                         Hapus
-                    </a>    
+                    </a>
                 </p>';
 
                 $data[] = $row;
@@ -80,6 +92,7 @@ class UserController extends Controller
             'name'     => $request->name,
             'username' => $request->username,
             'level'    => $request->level,
+            'status'   => $request->status,
             'password' => Hash::make('123456'),
         ];
 

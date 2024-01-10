@@ -65,6 +65,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-4">
+                        <label for="username" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9 align-self-center">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="aktif" value="1"
+                                    required {{ $isEdit ? is_checked('1', $data->status) : '' }}>
+                                <label class="form-check-label" for="aktif">Aktif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="tidak_aktif"
+                                    value="0" required {{ $isEdit ? is_checked('0', $data->status) : '' }}>
+                                <label class="form-check-label" for="tidak_aktif">Tidak Aktif</label>
+                            </div>
+                        </div>
+                    </div>
                     @if (!$isEdit)
                         <div class="row mb-4">
                             <label for="password" class="col-sm-3 col-form-label">Password</label>
