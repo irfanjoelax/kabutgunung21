@@ -122,7 +122,7 @@ class PenjualanController extends Controller
         foreach ($penjualans->latest()->get() as $penjualan) {
             $row = [];
 
-            $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
+            $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
             if ($penjualan->user()->exists()) {
                 if ($penjualan->user_id != null) {
