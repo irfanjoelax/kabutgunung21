@@ -46,15 +46,18 @@ class ProdukController extends Controller
 
                 if (Auth::user()->level == 'owner') {
                     $row[] = '<p class="text-center">
-                        <a href="' . url('admin/produk/history/' . $produk->id) . '" class="btn btn-sm btn-warning">
-                            Histori
+                        <a href="' . url('admin/produk/history/penjualan/' . $produk->id) . '" class="btn btn-sm btn-info">
+                            Penjualan
+                        </a>
+                        <a href="' . url('admin/produk/history/restok/' . $produk->id) . '" class="btn btn-sm btn-warning">
+                            Re-Stok
                         </a>
                         <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
                             Ubah
                         </a>
                         <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
                             Hapus
-                        </a>    
+                        </a>
                     </p>';
                 }
 
@@ -102,6 +105,19 @@ class ProdukController extends Controller
             'data'       => $data,
         ]);
     }
+
+    public function restok($id)
+    {
+        $data = Produk::with(['restoks' => function ($query) {
+            $query->take(100);
+        }])->find($id);
+
+        return view('admin.produk.restok', [
+            'activeMenu' => 'produk',
+            'data'       => $data,
+        ]);
+    }
+
 
     public function submit(Request $request, $id = null)
     {

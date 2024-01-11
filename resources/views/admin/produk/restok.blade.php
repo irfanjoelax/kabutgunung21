@@ -35,28 +35,34 @@
             </div>
             <div class="col-md-8 col-12 mb-3">
                 <div class="bg-white p-3 rounded-4 shadow table-responsive">
-                    <h1 class="mb-3 fw-bold">History Penjualan</h1>
+                    <h1 class="mb-3 fw-bold">History Re-Stok</h1>
                     <table class="table table-bordered datatable align-middle datatable">
                         <thead class="bg-primary text-white">
                             <tr>
-                                <th width="28%" class="text-start">No. Pesanan</th>
-                                <th width="20%" class="text-center">No. Invoice</th>
-                                <th width="17%" class="text-start">Hrg. Jual</th>
-                                <th width="7%" class="text-center">Qty</th>
-                                <th width="18%" class="text-center">Total</th>
+                                <th width="30%" class="text-start">Tanggal</th>
+                                <th width="25%" class="text-start">Harga Awal</th>
+                                <th width="25%" class="text-start">Harga Akhir</th>
+                                <th width="10%" class="text-start">Stok Awal</th>
+                                <th width="10%" class="text-start">Re-Stok</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data->penjualan_details as $item)
+                            @foreach ($data->restoks as $item)
                                 <tr>
-                                    <td class="text-start">{{ $item->penjualan->no_pesanan }}</td>
-                                    <td class="text-center">{{ $item->penjualan->no_invoice }}</td>
+                                    <td class="text-start">{{ tanggal($item->created_at, true) }}</td>
                                     <td class="text-start">
-                                        Rp. <span class="float-end">{{ number_format($item->hrg_jual, 0, ',', '.') }}</span>
+                                        Rp. <span
+                                            class="float-end">{{ number_format($item->harga_awal, 0, ',', '.') }}</span>
                                     </td>
-                                    <td class="text-center">{{ $item->qty }}</td>
                                     <td class="text-start">
-                                        Rp. <span class="float-end">{{ number_format($item->total, 0, ',', '.') }}</span>
+                                        Rp. <span
+                                            class="float-end">{{ number_format($item->harga_akhir, 0, ',', '.') }}</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="float-end">{{ number_format($item->stok_awal, 0, ',', '.') }}</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="float-end">{{ number_format($item->restok, 0, ',', '.') }}</span>
                                     </td>
                                 </tr>
                             @endforeach
