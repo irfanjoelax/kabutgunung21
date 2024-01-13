@@ -102,7 +102,6 @@ class PenjualanController extends Controller
             'penjualans' => Penjualan::latest()->get()
         ]);
     }
-
     public function filter($awal, $akhir, $status)
     {
         $whereArr = [
