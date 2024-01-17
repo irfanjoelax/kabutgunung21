@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     // MASTER DATA PRODUK
     Route::get('/admin/produk', [App\Http\Controllers\ProdukController::class, 'index']);
     Route::get('/admin/produk/create', [App\Http\Controllers\ProdukController::class, 'create']);
+    Route::get('/admin/produk/stok-habis', [App\Http\Controllers\ProdukController::class, 'stokHabis']);
 
 
     // MASTER DATA PENGELUARAN
