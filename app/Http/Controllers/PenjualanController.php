@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Marketplace;
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
@@ -96,18 +97,21 @@ class PenjualanController extends Controller
         }
 
         return view('admin.penjualan.index', [
-            'activeMenu' => 'penjualan',
-            'awal' => $awal,
-            'akhir' => $akhir,
-            'penjualans' => Penjualan::latest()->get()
+            'activeMenu'   => 'penjualan',
+            'awal'         => $awal,
+            'akhir'        => $akhir,
+            'penjualans'   => Penjualan::latest()->get(),
+            'marketplaces' => Marketplace::latest()->get()
         ]);
     }
-    public function filter($awal, $akhir, $status)
+
+    public function filter($awal, $akhir, $status, $marketplace)
     {
         $whereArr = [
             ['created_at', '>=', $awal . " 00:00:00"],
             ['created_at', '<=', $akhir . " 23:59:59"],
             ['status_bayar', '=', $status],
+            ['marketplace_id', '=', $marketplace],
         ];
 
         $penjualans = Penjualan::with('user')->where($whereArr);
@@ -116,12 +120,12 @@ class PenjualanController extends Controller
             $penjualans->whereIn('no_pesanan', explode(",", request('no_pesanan')));
         }
 
-        $data       = [];
+        $data = [];
 
         foreach ($penjualans->latest()->get() as $penjualan) {
             $row = [];
 
-            $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '</p>';
+            $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
 
             if ($penjualan->user()->exists()) {
                 if ($penjualan->user_id != null) {
