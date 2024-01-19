@@ -45,7 +45,7 @@
                         <div class="input-group">
                             <div class="input-group-text">Marketplace</div>
                             <select name="marketplace_id" id="marketplace_id" class="form-select">
-                                <option value="">Pilih Marketplace</option>
+                                <option value="Semua">Semua Marketplace</option>
                                 @foreach ($marketplaces as $marketplace)
                                     <option value="{{ $marketplace->id }}">{{ $marketplace->name }}</option>
                                 @endforeach
