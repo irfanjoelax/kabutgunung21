@@ -105,14 +105,17 @@ class PenjualanController extends Controller
         ]);
     }
 
-    public function filter($awal, $akhir, $status, $marketplace)
+    public function filter($awal, $akhir, $status, $marketplace = 'Semua')
     {
         $whereArr = [
             ['created_at', '>=', $awal . " 00:00:00"],
             ['created_at', '<=', $akhir . " 23:59:59"],
             ['status_bayar', '=', $status],
-            ['marketplace_id', '=', $marketplace],
         ];
+
+        if ($marketplace != 'Semua') {
+            $whereArr[] = ['marketplace_id', '=', $marketplace];
+        }
 
         $penjualans = Penjualan::with('user')->where($whereArr);
 
