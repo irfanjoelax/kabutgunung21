@@ -72,8 +72,14 @@
                                 <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
                                 <th width="13%" class="text-start">Grand Total</th>
-                                <th width="7%" class="text-center">Status Kirim</th>
-                                <th width="7%" class="text-center">Status Bayar</th>
+                                <th width="7%" class="text-center">
+                                    Status Kirim <br>
+                                    <input type="checkbox" id="checkAllKurir" class="form-check-input">
+                                </th>
+                                <th width="7%" class="text-center">
+                                    Status Bayar <br>
+                                    <input type="checkbox" id="checkAllBayar" class="form-check-input">
+                                </th>
                                 <th width="21%" class="text-start">Remark</th>
                                 <th width="7%" class="text-center">Action</th>
                             </tr>
@@ -93,6 +99,10 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                theme: 'bootstrap-5'
+            });
+
             const urlAjax = "{{ url('admin/penjualan') }}";
 
             const datatable = $('.datatable').DataTable({
@@ -143,10 +153,7 @@
                 });
             });
 
-            $('.datatable').on('change', '.status-kurir', function() {
-                var penjualanId = $(this).data('penjualan-id');
-                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
-
+            function updateStatusKurir(penjualanId, status) {
                 $.ajax({
                     url: '/admin/penjualan/update/kurir/' + penjualanId,
                     type: 'GET',
@@ -154,12 +161,19 @@
                         status: status
                     }
                 });
+            }
+
+            $('.datatable').on('change', '.status-kurir', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
+                updateStatusKurir(penjualanId, status);
             });
 
-            $('.datatable').on('change', '.status-bayar', function() {
-                var penjualanId = $(this).data('penjualan-id');
-                var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+            $('#checkAllKurir').click(function() {
+                $('.status-kurir').prop('checked', this.checked).trigger('change');
+            });
 
+            function updateStatusBayar(penjualanId, status) {
                 $.ajax({
                     url: '/admin/penjualan/update/bayar/' + penjualanId,
                     type: 'GET',
@@ -167,10 +181,16 @@
                         status: status
                     }
                 });
+            }
+
+            $('.datatable').on('change', '.status-bayar', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+                updateStatusBayar(penjualanId, status);
             });
 
-            $('.js-example-basic-multiple').select2({
-                theme: 'bootstrap-5'
+            $('#checkAllBayar').click(function() {
+                $('.status-bayar').prop('checked', this.checked).trigger('change');
             });
         });
     </script>
