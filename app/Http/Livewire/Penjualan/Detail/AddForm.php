@@ -73,7 +73,7 @@ class AddForm extends Component
 
                     $produk->decrement('stok', $this->qty);
 
-                    if ($produk->stok <= 3) {
+                    if ($produk->stok <= 10) {
                         Notifikasi::updateOrCreate(
                             [
                                 'tanggal' => date('Y-m-d'),
