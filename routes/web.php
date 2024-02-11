@@ -91,7 +91,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
         Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
         Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
-        Route::get('/admin/produk/history/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
+        Route::get('/admin/produk/history/penjualan/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
+        Route::get('/admin/produk/history/restok/{id}', [App\Http\Controllers\ProdukController::class, 'restok']);
         Route::get('/admin/produk/show/{sku}', [App\Http\Controllers\ProdukController::class, 'show']);
 
         // MASTER DATA PEMBELIAN

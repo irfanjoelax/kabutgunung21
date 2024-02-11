@@ -44,4 +44,9 @@ class Produk extends Model
     {
         return $this->hasMany(Notifikasi::class);
     }
+
+    public function restoks()
+    {
+        return $this->hasMany(Restok::class);
+    }
 }
