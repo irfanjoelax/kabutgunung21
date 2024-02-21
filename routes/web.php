@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PembelianController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

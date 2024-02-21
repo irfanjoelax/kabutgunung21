@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-12">
                 <label class="form-label">Market Place</label>
-                <select wire:model="marketplace_id" class="form-select">
+                <select wire:model="marketplace_id" wire:change="loadKurir" class="form-select">
                     <option value="" selected>-- Pilih Nama Market Place --</option>
                     @foreach ($marketplaces as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -33,7 +33,15 @@
             </div>
             <div class="col-md-12">
                 <label class="form-label">Jasa Kurir</label>
-                <input type="text" class="form-control" wire:model="kurir" placeholder="JNE / J&T / TIKI ...">
+                {{-- <input type="text" class="form-control" wire:model="kurir" placeholder="JNE / J&T / TIKI ..."> --}}
+                <select wire:model="kurir" class="form-select">
+                    <option value="" selected>-- Pilih Jasa Kurir --</option>
+                    @foreach ($kurirs as $kurir)
+                        <option value="{{ $kurir->name }}"
+                            {{ isset($_GET['type']) && $_GET['type'] == 'edit' && $kurir->name == $kurir ? 'selected' : '' }}>
+                            {{ $kurir->name }}</option>
+                    @endforeach
+                </select>
                 @error('kurir')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror

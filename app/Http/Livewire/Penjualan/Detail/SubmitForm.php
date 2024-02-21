@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class SubmitForm extends Component
 {
-    public $penjualan_id, $no_pesanan, $no_invoice, $kurir, $no_resi, $marketplace_id, $remark, $modal, $fee = 0, $total, $grand_total, $type_rules;
+    public $penjualan_id, $no_pesanan, $no_invoice, $kurir, $no_resi, $marketplace_id, $remark, $modal, $fee = 0, $total, $grand_total, $type_rules, $kurirs = [];
 
     protected $listeners = [
         'reloadSubmit'  => 'mount'
@@ -69,7 +69,12 @@ class SubmitForm extends Component
                 'marketplace_id' => 'required',
                 'fee'            => 'required|numeric',
             ];
+
+            $marketplace  = Marketplace::with('kurirs')->find($this->marketplace_id);
+            $this->kurirs = $marketplace->kurirs;
         }
+
+        // dd($this);
     }
 
     public function rules()
@@ -82,6 +87,12 @@ class SubmitForm extends Component
         return view('livewire.penjualan.detail.submit-form', [
             'marketplaces' => Marketplace::latest()->get(),
         ]);
+    }
+
+    public function loadKurir()
+    {
+        $marketplace = Marketplace::with('kurirs')->find($this->marketplace_id);
+        $this->kurirs = $marketplace->kurirs;
     }
 
     public function submit()

@@ -29,4 +29,9 @@ class Marketplace extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    public function kurirs()
+    {
+        return $this->hasMany(Kurir::class);
+    }
 }

@@ -17,7 +17,8 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th width="10%" class="text-center">No.</th>
-                                <th width="70%" class="text-start">Name</th>
+                                <th width="45%" class="text-start">Name</th>
+                                <th width="25%" class="text-start">Kurir</th>
                                 <th width="20%" class="text-center">Action</th>
                             </tr>
                         </thead>
