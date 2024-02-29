@@ -70,8 +70,12 @@ class SubmitForm extends Component
                 'fee'            => 'required|numeric',
             ];
 
-            $marketplace  = Marketplace::with('kurirs')->find($this->marketplace_id);
-            $this->kurirs = $marketplace->kurirs;
+            if ($this->marketplace_id != null) {
+                $marketplace  = Marketplace::with('kurirs')->find($this->marketplace_id);
+                $this->kurirs = $marketplace->kurirs;
+            } else {
+                $this->kurirs = [];
+            }
         }
 
         // dd($this);

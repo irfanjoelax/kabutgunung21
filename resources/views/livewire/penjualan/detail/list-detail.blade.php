@@ -6,7 +6,9 @@
                 <th class="text-center" width="17%">Harga</th>
                 <th class="text-center" width="10%">Qty</th>
                 <th class="text-center" width="18%">Total</th>
-                <th class="text-center" width="10%">Aksi</th>
+                @if (isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level == 'admin')
+                    <th class="text-center" width="10%">Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -30,16 +32,19 @@
                             {{ number_format($list->total) }}
                         </span>
                     </td>
-                    <td class="text-center">
-                        <button wire:click="deleteItem('{{ $list->id }}')" class="btn btn-sm btn-danger">
-                            <div wire:loading wire:target="deleteItem('{{ $list->id }}')">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </div>
-                            <div wire:loading.remove wire:target="deleteItem('{{ $list->id }}')">
-                                <i class="fa fa-trash"></i>
-                            </div>
-                        </button>
-                    </td>
+                    @if (isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level == 'admin')
+                        <td class="text-center">
+                            <button wire:click="deleteItem('{{ $list->id }}')" class="btn btn-sm btn-danger">
+                                <div wire:loading wire:target="deleteItem('{{ $list->id }}')">
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>
+                                </div>
+                                <div wire:loading.remove wire:target="deleteItem('{{ $list->id }}')">
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                            </button>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
