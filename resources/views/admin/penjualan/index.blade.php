@@ -72,14 +72,16 @@
                                 <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
                                 <th width="13%" class="text-start">Grand Total</th>
-                                <th width="7%" class="text-center">
-                                    Status Kirim <br>
-                                    <input type="checkbox" id="checkAllKurir" class="form-check-input">
-                                </th>
-                                <th width="7%" class="text-center">
-                                    Status Bayar <br>
-                                    <input type="checkbox" id="checkAllBayar" class="form-check-input">
-                                </th>
+                                @if (in_array(Auth::user()->level, ['owner', 'keuangan']))
+                                    <th width="7%" class="text-center">
+                                        Status Kirim <br>
+                                        <input type="checkbox" id="checkAllKurir" class="form-check-input">
+                                    </th>
+                                    <th width="7%" class="text-center">
+                                        Status Bayar <br>
+                                        <input type="checkbox" id="checkAllBayar" class="form-check-input">
+                                    </th>
+                                @endif
                                 <th width="21%" class="text-start">Remark</th>
                                 <th width="7%" class="text-center">Action</th>
                             </tr>
