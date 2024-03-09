@@ -49,6 +49,10 @@ class PenjualanController extends Controller
                     Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
                 </p>';
 
+                if (Auth::user()->level == 'admin') {
+                    $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
+                }
+
                 if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
