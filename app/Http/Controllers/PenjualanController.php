@@ -50,7 +50,11 @@ class PenjualanController extends Controller
                 </p>';
 
                 if (Auth::user()->level == 'admin') {
-                    $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
+                    if ($penjualan->status_kirim == 'TERKIRIM') {
+                        $row[] = '<p class="text-center"><span class="badge bg-success">TERKIRIM</span></p>';
+                    } else {
+                        $row[] = '<p class="text-center"><span class="badge bg-danger">BELUM TERKIRIM</span></p>';
+                    }
                 }
 
                 if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
@@ -58,23 +62,11 @@ class PenjualanController extends Controller
                     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
                 }
 
-                // if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
-                //     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
-                //     $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
-                // }
-
-                // if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
-                //     if ($penjualan->status_kurir === 'TERKIRIM') {
-                //         $row[] = '<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>';
-                //     } else {
-                //         $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kirim" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
-                //     }
-
-                //     $row[] = '<p class="text-center"><span class="badge bg-secondary">' . $penjualan->status_bayar . '</span></p>';
-                // }
-
                 $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
 
+                /**
+                 * BUTTON ACTION LEVEL USER
+                 */
                 if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
                     $row[] = '<p class="text-center">
                         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
@@ -90,6 +82,9 @@ class PenjualanController extends Controller
                     $row[] = '<p class="text-center">
                         <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
                             <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-edit"></i>
                         </a>
                     </p>';
                 }
@@ -129,7 +124,7 @@ class PenjualanController extends Controller
 
         $data = [];
 
-        foreach ($penjualans->latest()->get() as $penjualan) {
+        foreach ($penjualans->get() as $penjualan) {
             $row = [];
 
             $row[] = '<p class="text-center">' . $penjualan->no_pesanan . '<br>' . $penjualan->no_invoice . '</p>';
@@ -152,45 +147,44 @@ class PenjualanController extends Controller
                 Rp. <span class="float-end">' . number_format($penjualan->grand_total) . '</span>
             </p>';
 
-            if (Auth::user()->level == 'owner') {
-                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
-                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
-            }
-
-            if (Auth::user()->level == 'keuangan') {
-                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
-                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
-            }
-
             if (Auth::user()->level == 'admin') {
-                if ($penjualan->status_kurir === 'TERKIRIM') {
-                    $row[] = '<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>';
+                if ($penjualan->status_kirim == 'TERKIRIM') {
+                    $row[] = '<p class="text-center"><span class="badge bg-success">TERKIRIM</span></p>';
                 } else {
-                    $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kirim" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
+                    $row[] = '<p class="text-center"><span class="badge bg-danger">BELUM TERKIRIM</span></p>';
                 }
+            }
 
-                $row[] = '<p class="text-center"><span class="badge bg-secondary">' . $penjualan->status_bayar . '</span></p>';
+            if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
+                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
+                $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-bayar" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_bayar == 'TERBAYAR' ? 'checked' : '') . '></p>';
             }
 
             $row[] = '<p class="text-start">' . $penjualan->remark . '</p>';
 
+            /**
+             * BUTTON ACTION LEVEL USER
+             */
             if (in_array(Auth::user()->level, ['owner', 'keuangan'])) {
                 $row[] = '<p class="text-center">
-                        <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
-                        <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
-                            <i class="fa-solid fa-edit"></i>
-                        </a>
-                    </p>';
+                    <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
+                        <i class="fa-solid fa-edit"></i>
+                    </a>
+                </p>';
             }
 
             if (Auth::user()->level == 'admin') {
                 $row[] = '<p class="text-center">
-                        <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
-                    </p>';
+                    <a href="' . url('admin/penjualan/show/' . $penjualan->id) . '" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a href="' . url('admin/penjualan/detail/' . $penjualan->id . '?type=edit') . '" class="btn btn-sm btn-warning">
+                        <i class="fa-solid fa-edit"></i>
+                    </a>
+                </p>';
             }
 
             $data[] = $row;

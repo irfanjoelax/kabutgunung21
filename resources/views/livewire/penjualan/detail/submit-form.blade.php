@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <label class="form-label">No. Pesanan</label>
                 <input type="text" class="form-control" wire:model="no_pesanan"
-                    {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'readonly' : '' }}>
+                    {{ $inputNoPesanan ? '' : 'readonly' }}>
                 @error('no_pesanan')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -23,7 +23,7 @@
             <div class="col-md-12">
                 <label class="form-label">Market Place</label>
                 <select wire:model="marketplace_id" wire:change="loadKurir" class="form-select"
-                    {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'disabled' : '' }}>
+                    {{ $inputMarketplace ? '' : 'disabled' }}>
                     <option value="" selected>-- Pilih Nama Market Place --</option>
                     @foreach ($marketplaces as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -35,14 +35,10 @@
             </div>
             <div class="col-md-12">
                 <label class="form-label">Jasa Kurir</label>
-                {{-- <input type="text" class="form-control" wire:model="kurir" placeholder="JNE / J&T / TIKI ..."> --}}
-                <select wire:model="kurir" class="form-select"
-                    {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'disabled' : '' }}>
+                <select wire:model="kurir" class="form-select" {{ $inputJasaKurir ? '' : 'disabled' }}>
                     <option value="" selected>-- Pilih Jasa Kurir --</option>
                     @foreach ($kurirs as $kurir)
-                        <option value="{{ $kurir->name }}"
-                            {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'readonly' : '' }}>
-                            {{ $kurir->name }}</option>
+                        <option value="{{ $kurir->name }}">{{ $kurir->name }}</option>
                     @endforeach
                 </select>
                 @error('kurir')
@@ -51,22 +47,19 @@
             </div>
             <div class="col-md-12">
                 <label class="form-label">No. Resi</label>
-                <input type="text" class="form-control" wire:model="no_resi"
-                    {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'readonly' : '' }}>
+                <input type="text" class="form-control" wire:model="no_resi" {{ $inputNoResi ? '' : 'readonly' }}>
                 @error('no_resi')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col-md-12">
                 <label class="form-label">Catatan (Remark)</label>
-                <textarea class="form-control" rows="2" wire:model="remark"
-                    {{ isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level != 'owner' ? 'readonly' : '' }}></textarea>
+                <textarea class="form-control" rows="2" wire:model="remark" {{ $inputCatatan ? '' : 'readonly' }}></textarea>
             </div>
             <div class="col-md-12">
                 <label class="form-label">Fee (Biaya) Penjualan</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Rp.</span>
-                    {{-- <input type="text" class="form-control" wire:model.lazy="fee" wire:keydown="reloadTotal"> --}}
                     <input type="text" class="form-control" wire:model="fee">
                 </div>
                 @error('fee')

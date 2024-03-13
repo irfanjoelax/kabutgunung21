@@ -6,14 +6,15 @@
                 <th class="text-center" width="17%">Harga</th>
                 <th class="text-center" width="10%">Qty</th>
                 <th class="text-center" width="18%">Total</th>
-                {{-- @if (isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level == 'owner') --}}
-                <th class="text-center" width="10%">Aksi</th>
-                {{-- @endif --}}
+                @if (in_array(auth()->user()->level, ['owner']))
+                    <th class="text-center" width="10%">Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach ($details as $list)
-                <tr wire:click="editDetail('{{ $list->id }}')" style="cursor: pointer">
+                <tr
+                    @if (in_array(auth()->user()->level, ['owner'])) wire:click="editDetail('{{ $list->id }}')" style="cursor: pointer" @endif>
                     <td>
                         <p class="text-start my-0">{{ $list->produk->nama }}</p>
                     </td>
@@ -45,30 +46,19 @@
                             {{ number_format($list->total) }}
                         </span>
                     </td>
-                    {{-- @if (isset($_GET['type']) && $_GET['type'] == 'edit' && auth()->user()->level == 'owner') --}}
-                    <td class="text-center">
-                        <button wire:click="deleteItem('{{ $list->id }}')" class="btn btn-sm btn-danger">
-                            <div wire:loading wire:target="deleteItem('{{ $list->id }}')">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </div>
-                            <div wire:loading.remove wire:target="deleteItem('{{ $list->id }}')">
-                                <i class="fa fa-trash"></i>
-                            </div>
-                        </button>
-
-                        {{-- @if ($editState == $list->id)
-                            <button wire:click="cancelEdit('{{ $list->id }}')" class="btn btn-sm btn-secondary">
-                                <div wire:loading wire:target="cancelEdit('{{ $list->id }}')">
+                    @if (in_array(auth()->user()->level, ['owner']))
+                        <td class="text-center">
+                            <button wire:click="deleteItem('{{ $list->id }}')" class="btn btn-sm btn-danger">
+                                <div wire:loading wire:target="deleteItem('{{ $list->id }}')">
                                     <span class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span>
                                 </div>
-                                <div wire:loading.remove wire:target="cancelEdit('{{ $list->id }}')">
-                                    <i class="fa fa-rotate"></i>
+                                <div wire:loading.remove wire:target="deleteItem('{{ $list->id }}')">
+                                    <i class="fa fa-trash"></i>
                                 </div>
                             </button>
-                        @endif --}}
-                    </td>
-                    {{-- @endif --}}
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

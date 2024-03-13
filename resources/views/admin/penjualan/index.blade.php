@@ -74,8 +74,7 @@
                                 <th width="13%" class="text-start">Grand Total</th>
                                 @if (Auth::user()->level == 'admin')
                                     <th width="7%" class="text-center">
-                                        Status Kirim <br>
-                                        <input type="checkbox" id="checkAllKurir" class="form-check-input">
+                                        Status Kirim
                                     </th>
                                 @endif
                                 @if (in_array(Auth::user()->level, ['owner', 'keuangan']))
