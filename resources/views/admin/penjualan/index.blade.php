@@ -74,7 +74,8 @@
                                 <th width="13%" class="text-start">Grand Total</th>
                                 @if (Auth::user()->level == 'admin')
                                     <th width="7%" class="text-center">
-                                        Status Kirim
+                                        Status Kirim <br>
+                                        <input type="checkbox" id="checkAllKurir" class="form-check-input">
                                     </th>
                                 @endif
                                 @if (in_array(Auth::user()->level, ['owner', 'keuangan']))
@@ -139,7 +140,7 @@
                 datatable.ajax.url(urlFilter).load()
             });
 
-            $('.datatable').on('change', '.status-kirim', function() {
+            $('.datatable').on('change', '.status-kurir', function() {
                 var penjualanId = $(this).data('penjualan-id');
                 var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
 

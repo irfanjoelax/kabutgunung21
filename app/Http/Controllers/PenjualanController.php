@@ -50,10 +50,10 @@ class PenjualanController extends Controller
                 </p>';
 
                 if (Auth::user()->level == 'admin') {
-                    if ($penjualan->status_kirim == 'TERKIRIM') {
-                        $row[] = '<p class="text-center"><span class="badge bg-success">TERKIRIM</span></p>';
+                    if ($penjualan->status_kurir === 'TERKIRIM') {
+                        $row[] = '<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>';
                     } else {
-                        $row[] = '<p class="text-center"><span class="badge bg-danger">BELUM TERKIRIM</span></p>';
+                        $row[] = '<p class="text-center"><input type="checkbox" class="form-check-input status-kurir" data-penjualan-id="' . $penjualan->id . '"' . ($penjualan->status_kurir == 'TERKIRIM' ? 'checked' : '') . '></p>';
                     }
                 }
 

@@ -76,20 +76,23 @@
                         </a>
                     </li>
 
-                    <li class="nav-item me-2">
-                        <a class="nav-link {{ $activeMenu == 'kategori' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/kategori') }}">
-                            <i class="fa-solid fa-table-cells-large"></i>
-                            <span class="ms-1">Kategori</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link {{ $activeMenu == 'marketplace' ? 'bg-warning text-white rounded' : '' }}"
-                            href="{{ url('admin/marketplace') }}">
-                            <i class="fa-solid fa-store"></i>
-                            <span class="ms-1">Marketplace</span>
-                        </a>
-                    </li>
+                    @if (in_array(Auth::user()->level, ['owner', 'keuangan']))
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'kategori' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/kategori') }}">
+                                <i class="fa-solid fa-table-cells-large"></i>
+                                <span class="ms-1">Kategori</span>
+                            </a>
+                        </li>
+                        <li class="nav-item me-2">
+                            <a class="nav-link {{ $activeMenu == 'marketplace' ? 'bg-warning text-white rounded' : '' }}"
+                                href="{{ url('admin/marketplace') }}">
+                                <i class="fa-solid fa-store"></i>
+                                <span class="ms-1">Marketplace</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="nav-item me-2">
                         <a class="nav-link {{ $activeMenu == 'produk' ? 'bg-warning text-white rounded' : '' }}"
                             href="{{ url('admin/produk') }}">
