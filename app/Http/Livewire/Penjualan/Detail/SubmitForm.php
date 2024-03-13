@@ -83,11 +83,11 @@ class SubmitForm extends Component
                 $this->inputMarketplace = false;
                 $this->inputJasaKurir = false;
                 $this->inputNoResi = false;
-                $this->inputFee = false;
             }
 
             if (auth()->user()->level == 'admin') {
                 $this->inputCatatan = true;
+                $this->inputFee = false;
             }
 
             if (auth()->user()->level == 'owner') {
