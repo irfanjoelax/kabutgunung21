@@ -144,9 +144,12 @@
                 var penjualanId = $(this).data('penjualan-id');
                 var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
 
-                var checkbox = $(this);
-                var badge = $(
-                    `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
+                var userLevel = '{{ auth()->user()->level }}';
+                if (userLevel == 'admin') {
+                    var checkbox = $(this);
+                    var badge = $(
+                        `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
+                }
 
                 $.ajax({
                     url: '/admin/penjualan/update/kurir/' + penjualanId,
