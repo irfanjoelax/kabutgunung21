@@ -145,7 +145,7 @@
                 var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
 
                 var userLevel = '{{ auth()->user()->level }}';
-                if (userLevel == 'admin') {
+                if (userLevel == 'admin' || userLevel == 'keuangan') {
                     var checkbox = $(this);
                     var badge = $(
                         `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
@@ -159,7 +159,6 @@
                     },
                     success: function() {
                         checkbox.replaceWith(badge);
-                        console.log(badge)
                     }
                 });
             });
@@ -190,14 +189,37 @@
                     type: 'GET',
                     data: {
                         status: status
+                    },
+                    success: function() {
+                        checkbox.replaceWith(badge);
                     }
                 });
             }
 
             $('.datatable').on('change', '.status-bayar', function() {
-                var penjualanId = $(this).data('penjualan-id');
-                var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
-                updateStatusBayar(penjualanId, status);
+                var penjualan_id = $(this).data('penjualan-id');
+                // var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+                var penjualan_id = $(this).data('penjualan-id');
+                var statusBayar = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+
+                var userLevel = '{{ auth()->user()->level }}';
+                if (userLevel == 'keuangan') {
+                    var checkbox = $(this);
+                    var badge = $(
+                        `<p class="text-center"><span class="badge bg-secondary">TERBAYAR</span></p>`);
+                }
+                // updateStatusBayar(penjualan_id, statusBayar);
+
+                $.ajax({
+                    url: '/admin/penjualan/update/bayar/' + penjualan_id,
+                    type: 'GET',
+                    data: {
+                        status: statusBayar
+                    },
+                    success: function() {
+                        checkbox.replaceWith(badge);
+                    }
+                });
             });
 
             $('#checkAllBayar').click(function() {
