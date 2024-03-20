@@ -145,7 +145,7 @@
                 var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
 
                 var userLevel = '{{ auth()->user()->level }}';
-                if (userLevel == 'admin' || userLevel == 'keuangan') {
+                if (userLevel == 'admin' || userLevel == 'keuangan' || userLevel == 'owner') {
                     var checkbox = $(this);
                     var badge = $(
                         `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
@@ -203,7 +203,7 @@
                 var statusBayar = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
 
                 var userLevel = '{{ auth()->user()->level }}';
-                if (userLevel == 'keuangan') {
+                if (userLevel == 'keuangan' || userLevel == 'owner') {
                     var checkbox = $(this);
                     var badge = $(
                         `<p class="text-center"><span class="badge bg-secondary">TERBAYAR</span></p>`);
