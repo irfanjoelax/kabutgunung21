@@ -18,21 +18,21 @@
                             <textarea name="no_pesanan" id="no_pesanan" rows="1" class="form-control"></textarea>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Awal</div>
                             <input type="date" class="form-control" name="awal" id="awal"
                                 value="{{ $_REQUEST['awal'] ?? $awal }}" required>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Akhir</div>
                             <input type="date" class="form-control" name="akhir" id="akhir"
                                 value="{{ $_REQUEST['akhir'] ?? $akhir }}" required>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
                         <div class="input-group">
                             <div class="input-group-text">Status</div>
                             <select name="status" id="status" class="form-select">
@@ -41,7 +41,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-3 mb-3">
+                    <div class="col-2 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text">Marketplace</div>
+                            <select name="marketplace_id" id="marketplace_id" class="form-select">
+                                <option value="Semua">Semua Marketplace</option>
+                                @foreach ($marketplaces as $marketplace)
+                                    <option value="{{ $marketplace->id }}">{{ $marketplace->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
                         <button type="submit" class="btn btn-success">Filter</button>
                         <a href="{{ url('admin/penjualan') }}" class="btn btn-warning">Reset</a>
                     </div>
@@ -61,8 +72,22 @@
                                 <th width="10%" class="text-center">User</th>
                                 <th width="13%" class="text-start">Total</th>
                                 <th width="13%" class="text-start">Grand Total</th>
-                                <th width="7%" class="text-center">Status Kirim</th>
-                                <th width="7%" class="text-center">Status Bayar</th>
+                                @if (Auth::user()->level == 'admin')
+                                    <th width="7%" class="text-center">
+                                        Status Kirim <br>
+                                        <input type="checkbox" id="checkAllKurir" class="form-check-input">
+                                    </th>
+                                @endif
+                                @if (in_array(Auth::user()->level, ['owner', 'keuangan']))
+                                    <th width="7%" class="text-center">
+                                        Status Kirim <br>
+                                        <input type="checkbox" id="checkAllKurir" class="form-check-input">
+                                    </th>
+                                    <th width="7%" class="text-center">
+                                        Status Bayar <br>
+                                        <input type="checkbox" id="checkAllBayar" class="form-check-input">
+                                    </th>
+                                @endif
                                 <th width="21%" class="text-start">Remark</th>
                                 <th width="7%" class="text-center">Action</th>
                             </tr>
@@ -82,6 +107,10 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                theme: 'bootstrap-5'
+            });
+
             const urlAjax = "{{ url('admin/penjualan') }}";
 
             const datatable = $('.datatable').DataTable({
@@ -102,21 +131,25 @@
                 const awal = document.getElementById('awal').value;
                 const akhir = document.getElementById('akhir').value;
                 const status = document.getElementById('status').value;
+                const marketplace = document.getElementById('marketplace_id').value;
                 const noPesanan = document.getElementById('no_pesanan').value;
 
                 const urlFilter = "{{ url('admin/penjualan') }}" + "/" + awal + "/" + akhir + "/" + status +
-                    "?no_pesanan=" + noPesanan;
+                    "/" + marketplace + "?no_pesanan=" + noPesanan;
 
                 datatable.ajax.url(urlFilter).load()
-            })
+            });
 
-            $('.datatable').on('change', '.status-kirim', function() {
+            $('.datatable').on('change', '.status-kurir', function() {
                 var penjualanId = $(this).data('penjualan-id');
                 var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
 
-                var checkbox = $(this);
-                var badge = $(
-                    `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
+                var userLevel = '{{ auth()->user()->level }}';
+                if (userLevel == 'admin' || userLevel == 'keuangan' || userLevel == 'owner') {
+                    var checkbox = $(this);
+                    var badge = $(
+                        `<p class="text-center"><span class="badge bg-secondary">TERKIRIM</span></p>`);
+                }
 
                 $.ajax({
                     url: '/admin/penjualan/update/kurir/' + penjualanId,
@@ -126,15 +159,11 @@
                     },
                     success: function() {
                         checkbox.replaceWith(badge);
-                        console.log(badge)
                     }
                 });
             });
 
-            $('.datatable').on('change', '.status-kurir', function() {
-                var penjualanId = $(this).data('penjualan-id');
-                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
-
+            function updateStatusKurir(penjualanId, status) {
                 $.ajax({
                     url: '/admin/penjualan/update/kurir/' + penjualanId,
                     type: 'GET',
@@ -142,23 +171,59 @@
                         status: status
                     }
                 });
+            }
+
+            $('.datatable').on('change', '.status-kurir', function() {
+                var penjualanId = $(this).data('penjualan-id');
+                var status = $(this).prop('checked') ? 'TERKIRIM' : 'BELUM TERKIRIM';
+                updateStatusKurir(penjualanId, status);
             });
 
-            $('.datatable').on('change', '.status-bayar', function() {
-                var penjualanId = $(this).data('penjualan-id');
-                var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+            $('#checkAllKurir').click(function() {
+                $('.status-kurir').prop('checked', this.checked).trigger('change');
+            });
 
+            function updateStatusBayar(penjualanId, status) {
                 $.ajax({
                     url: '/admin/penjualan/update/bayar/' + penjualanId,
                     type: 'GET',
                     data: {
                         status: status
+                    },
+                    success: function() {
+                        checkbox.replaceWith(badge);
+                    }
+                });
+            }
+
+            $('.datatable').on('change', '.status-bayar', function() {
+                var penjualan_id = $(this).data('penjualan-id');
+                // var status = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+                var penjualan_id = $(this).data('penjualan-id');
+                var statusBayar = $(this).prop('checked') ? 'TERBAYAR' : 'BELUM TERBAYAR';
+
+                var userLevel = '{{ auth()->user()->level }}';
+                if (userLevel == 'keuangan' || userLevel == 'owner') {
+                    var checkbox = $(this);
+                    var badge = $(
+                        `<p class="text-center"><span class="badge bg-secondary">TERBAYAR</span></p>`);
+                }
+                // updateStatusBayar(penjualan_id, statusBayar);
+
+                $.ajax({
+                    url: '/admin/penjualan/update/bayar/' + penjualan_id,
+                    type: 'GET',
+                    data: {
+                        status: statusBayar
+                    },
+                    success: function() {
+                        checkbox.replaceWith(badge);
                     }
                 });
             });
 
-            $('.js-example-basic-multiple').select2({
-                theme: 'bootstrap-5'
+            $('#checkAllBayar').click(function() {
+                $('.status-bayar').prop('checked', this.checked).trigger('change');
             });
         });
     </script>

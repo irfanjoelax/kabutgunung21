@@ -36,7 +36,8 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
-        'level'
+        'level',
+        'status',
     ];
 
     /**
@@ -56,5 +57,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'status' => 'boolean'
     ];
 }

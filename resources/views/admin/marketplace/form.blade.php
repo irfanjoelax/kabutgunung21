@@ -30,7 +30,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-9 offset-sm-3 text-end">
+                        <label for="name" class="col-sm-3 col-form-label">Kurir</label>
+                        <div class="col-sm-6 inputKurir">
+                            @if ($isEdit)
+                                @foreach ($data->kurirs as $kurir)
+                                    <input type="text" class="form-control mb-4" name="kurirs[]"
+                                        placeholder="Masukkan nama kurir" value="{{ $kurir->name }}">
+                                @endforeach
+                            @else
+                                <input type="text" class="form-control mb-4" name="kurirs[]"
+                                    placeholder="Masukkan nama kurir">
+                            @endif
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-secondary w-100" type="button" id="addKurir">
+                                + Tambah Kurir
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9 offset-sm-3">
                             <button type="submit" class="btn btn-primary">
                                 {{ $isEdit ? 'Ubah' : 'Simpan' }} Data
                             </button>
@@ -43,4 +62,20 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        document.getElementById('addKurir').addEventListener('click', function() {
+            var inputGroup = document.querySelector('.inputKurir');
+
+            var newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'kurirs[]';
+            newInput.className = 'form-control mb-4';
+            newInput.placeholder = 'Masukkan nama kurir';
+
+            inputGroup.appendChild(newInput);
+        });
+    </script>
 @endsection

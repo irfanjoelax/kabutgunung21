@@ -5,6 +5,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+
+    {{-- @if (isset($_GET['type']))
+        @if ($_GET['type'] == 'create' || ($_GET['type'] == 'edit' && auth()->user()->level == 'owner')) --}}
     <form class="row g-3 align-items-center" wire:submit.prevent="submit">
         <div class="col-md-5 mb-3">
             <div class="input-group input-group-sm">
@@ -66,5 +69,6 @@
             </button>
         </div>
     </form>
-
+    {{-- @endif
+    @endif --}}
 </div>

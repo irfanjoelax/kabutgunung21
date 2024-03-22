@@ -46,15 +46,18 @@ class ProdukController extends Controller
 
                 if (Auth::user()->level == 'owner') {
                     $row[] = '<p class="text-center">
-                        <a href="' . url('admin/produk/history/' . $produk->id) . '" class="btn btn-sm btn-warning">
-                            Histori
+                        <a href="' . url('admin/produk/history/penjualan/' . $produk->id) . '" class="btn btn-sm btn-info">
+                            Penjualan
+                        </a>
+                        <a href="' . url('admin/produk/history/restok/' . $produk->id) . '" class="btn btn-sm btn-warning">
+                            Re-Stok
                         </a>
                         <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
                             Ubah
                         </a>
                         <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
                             Hapus
-                        </a>    
+                        </a>
                     </p>';
                 }
 
@@ -68,6 +71,51 @@ class ProdukController extends Controller
         return view('admin.produk.index', [
             'activeMenu' => 'produk'
         ]);
+    }
+
+    public function stokHabis()
+    {
+        $produks = Produk::with('kategori')->where('stok', 0)->latest()->get();
+        $data    = [];
+        $no      = 1;
+
+        foreach ($produks as $produk) {
+            $row = [];
+
+            $row[] = '<p class="text-center">' . $no++ . '</p>';
+            $row[] = '<p class="text-start"><strong>' . $produk->nama . '</strong> <br>
+                    <small class="text-muted">' . $produk->sku . '</small>
+                </p>';
+            $row[] = '<p class="text-center">' . $produk->kategori->name . '</p>';
+
+            if (Auth::user()->level == 'owner') {
+                $row[] = '<p class="text-start">
+                        Rp. <span class="float-end">' . number_format($produk->harga_beli) . '</span>
+                    </p>';
+            }
+
+            $row[] = '<p class="text-end ' . $this->checkStok($produk->stok) . '">
+                    <strong>' . $produk->stok . '</strong>
+                </p>';
+
+            if (Auth::user()->level == 'owner') {
+                $row[] = '<p class="text-center">
+                        <a href="' . url('admin/produk/history/' . $produk->id) . '" class="btn btn-sm btn-warning">
+                            Histori
+                        </a>
+                        <a href="' . url('admin/produk/edit/' . $produk->id) . '" class="btn btn-sm btn-success">
+                            Ubah
+                        </a>
+                        <a onclick="return confirm(`Apakah yakin ingin menghapus data berikut ini?`)" href="' . url('admin/produk/delete/' . $produk->id) . '" class="btn btn-sm btn-danger">
+                            Hapus
+                        </a>
+                    </p>';
+            }
+
+            $data[] = $row;
+        }
+
+        return response()->json(["data" => $data]);
     }
 
     public function create()
@@ -102,6 +150,19 @@ class ProdukController extends Controller
             'data'       => $data,
         ]);
     }
+
+    public function restok($id)
+    {
+        $data = Produk::with(['restoks' => function ($query) {
+            $query->take(100);
+        }])->find($id);
+
+        return view('admin.produk.restok', [
+            'activeMenu' => 'produk',
+            'data'       => $data,
+        ]);
+    }
+
 
     public function submit(Request $request, $id = null)
     {

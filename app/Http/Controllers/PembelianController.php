@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\Restok;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -74,6 +75,14 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         $produk = Produk::where('sku', $request->sku)->firstOrFail();
+
+        Restok::create([
+            'produk_id'   => $produk->id,
+            'harga_awal'  => $produk->harga_beli,
+            'harga_akhir' => $request->harga_beli,
+            'stok_awal'   => $produk->stok,
+            'restok'      => $request->restok
+        ]);
 
         $produk->update([
             'harga_beli' => $request->harga_beli,

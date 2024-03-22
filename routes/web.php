@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PembelianController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     // MASTER DATA PRODUK
     Route::get('/admin/produk', [App\Http\Controllers\ProdukController::class, 'index']);
     Route::get('/admin/produk/create', [App\Http\Controllers\ProdukController::class, 'create']);
+    Route::get('/admin/produk/stok-habis', [App\Http\Controllers\ProdukController::class, 'stokHabis']);
 
 
     // MASTER DATA PENGELUARAN
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('penjualan.detail');
     Route::get('/admin/penjualan/update/kurir/{id}', [App\Http\Controllers\PenjualanController::class, 'updateKurir']);
     Route::get('/admin/penjualan/update/bayar/{id}', [App\Http\Controllers\PenjualanController::class, 'updateBayar']);
-    Route::get('/admin/penjualan/{awal}/{akhir}/{status}', [App\Http\Controllers\PenjualanController::class, 'filter']);
+    Route::get('/admin/penjualan/{awal}/{akhir}/{status}/{marketplace}', [App\Http\Controllers\PenjualanController::class, 'filter']);
 
     /**
      * KHUSUS LEVEL ADMIN/KARYAWAN
@@ -90,7 +90,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/produk/edit/{id}', [App\Http\Controllers\ProdukController::class, 'edit']);
         Route::post('/admin/produk/submit/{id?}', [App\Http\Controllers\ProdukController::class, 'submit']);
         Route::get('/admin/produk/delete/{id}', [App\Http\Controllers\ProdukController::class, 'delete']);
-        Route::get('/admin/produk/history/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
+        Route::get('/admin/produk/history/penjualan/{id}', [App\Http\Controllers\ProdukController::class, 'history']);
+        Route::get('/admin/produk/history/restok/{id}', [App\Http\Controllers\ProdukController::class, 'restok']);
         Route::get('/admin/produk/show/{sku}', [App\Http\Controllers\ProdukController::class, 'show']);
 
         // MASTER DATA PEMBELIAN

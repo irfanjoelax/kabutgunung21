@@ -7,13 +7,14 @@ use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class SubmitForm extends Component
 {
-    public $penjualan_id, $no_pesanan, $no_invoice, $kurir, $no_resi, $marketplace_id, $remark, $modal, $fee = 0, $total, $grand_total, $type_rules;
+    public $penjualan_id, $no_pesanan, $no_invoice, $kurir, $no_resi, $marketplace_id, $remark, $modal, $fee = 0, $total, $grand_total, $type_rules, $kurirs = [];
+
+    # STATE HANDLE EDIT SUBMIT FORM
+    public $inputNoInvoice = true, $inputNoPesanan = true, $inputMarketplace = true, $inputJasaKurir = true, $inputNoResi = true, $inputCatatan = true, $inputFee = true;
 
     protected $listeners = [
         'reloadSubmit'  => 'mount'
@@ -49,7 +50,6 @@ class SubmitForm extends Component
         $this->grand_total    = $this->total - $this->fee;
         $this->no_pesanan     = $penjualan->no_pesanan;
         $this->no_invoice     = $penjualan->no_invoice;
-        // $this->type_rules     = $request->type;
 
         if ($request->type === 'create') {
             $this->type_rules = [
@@ -69,7 +69,34 @@ class SubmitForm extends Component
                 'marketplace_id' => 'required',
                 'fee'            => 'required|numeric',
             ];
+
+            if ($this->marketplace_id != null) {
+                $marketplace  = Marketplace::with('kurirs')->find($this->marketplace_id);
+                $this->kurirs = $marketplace->kurirs;
+            } else {
+                $this->kurirs = [];
+            }
+
+            if (auth()->user()->level != 'owner') {
+                $this->inputNoInvoice = false;
+                $this->inputNoPesanan = false;
+                $this->inputMarketplace = false;
+                $this->inputJasaKurir = false;
+                $this->inputNoResi = false;
+            }
+
+            if (auth()->user()->level == 'admin') {
+                $this->inputCatatan = true;
+                $this->inputFee = false;
+            }
+
+            if (auth()->user()->level == 'owner') {
+                $this->inputCatatan = true;
+                $this->inputFee = true;
+            }
         }
+
+        // dd($this);
     }
 
     public function rules()
@@ -82,6 +109,12 @@ class SubmitForm extends Component
         return view('livewire.penjualan.detail.submit-form', [
             'marketplaces' => Marketplace::latest()->get(),
         ]);
+    }
+
+    public function loadKurir()
+    {
+        $marketplace = Marketplace::with('kurirs')->find($this->marketplace_id);
+        $this->kurirs = $marketplace->kurirs;
     }
 
     public function submit()

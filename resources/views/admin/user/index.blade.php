@@ -20,6 +20,7 @@
                                 <th width="30%" class="text-start">Fullname</th>
                                 <th width="25%" class="text-center">Username</th>
                                 <th width="15%" class="text-center">Level</th>
+                                <th width="5%" class="text-center">Status</th>
                                 <th width="20%" class="text-center">Action</th>
                             </tr>
                         </thead>

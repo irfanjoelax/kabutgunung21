@@ -18,7 +18,7 @@
                                 @if ($detail->produk)
                                     <li class="list-group-item d-flex justify-content-between align-items-start">
                                         <p class="text-{{ $detail->produk->stok == 0 ? 'danger' : 'primary' }}">
-                                            {{ $detail->produk->nama }}
+                                            {{ $detail->produk->sku }}
                                         </p>
                                         <span
                                             class="badge bg-{{ $detail->produk->stok == 0 ? 'danger' : 'primary' }} rounded-pill">
@@ -30,28 +30,6 @@
                         </ol>
                     </div>
                 @endforeach
-                {{-- @foreach ($data as $item => $notifikasi)
-                    <div class="mb-3">
-                        <small class="text-muted">
-                            {{ tanggal(substr($item, 0, 10), true) }}
-                        </small>
-                        <ol class="list-group list-group-flush">
-                            @foreach ($notifikasi as $detail)
-                                @foreach ($detail->penjualan_details as $produk)
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <p class="text-{{ $produk->produk->stok == 0 ? 'danger' : 'primary' }}">
-                                            {{ $produk->produk->nama }}
-                                        </p>
-                                        <span
-                                            class="badge bg-{{ $produk->produk->stok == 0 ? 'danger' : 'primary' }} rounded-pill">
-                                            {{ $produk->produk->stok }}
-                                        </span>
-                                    </li>
-                                @endforeach
-                            @endforeach
-                        </ol>
-                    </div>
-                @endforeach --}}
             </div>
         </div>
     </div>
